@@ -37,3 +37,21 @@ export function findBoxById (params) {
 export function findWalletRecord (params) {
   return http.get('/wallet/walletRecord', { params })
 }
+// 获取用户列表
+export function findUserAll (data) {
+  return http.get('/wallet/findAll', { params: data, interceptors: true })
+}
+// 获取用户详情
+export function findUser (params) {
+  return http.get('/wallet/findInfoByWalletAddress', { params })
+}
+export function findUserIncome (data) {
+  return http.get('/wallet/findMyIncome', { params: data })
+}
+export function findTeamIncome (data) {
+  return http.get('/wallet/findTeamIncome', { params: data })
+}
+// 获取我的邀请记录
+export function findInvitationRecord (params) {
+  return http.get('/wallet/findMyInv', { params, interceptors: true })
+}

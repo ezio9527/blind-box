@@ -5,11 +5,11 @@
     <div>
       <div>
         <div>{{ $t('teamView.manNumber') }}</div>
-        <div>100</div>
+        <div>{{ total }}</div>
       </div>
       <div>
         <div>{{ $t('teamView.achievements') }}</div>
-        <div>$10000</div>
+        <div>{{ income }}</div>
       </div>
     </div>
     <img src="@img/team/vip.png" />
@@ -17,8 +17,45 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { findUserIncome } from '@/server/http/api'
+
 export default {
-  name: 'DataComp'
+  name: 'DataComp',
+  props: {
+    total: Number
+  },
+  computed: {
+    ...mapGetters({
+      account: 'wallet/getAddress'
+    })
+  },
+  data () {
+    return {
+      income: ''
+    }
+  },
+  watch: {
+    account: {
+      immediate: true,
+      handler (val) {
+        if (val) {
+          this.findIncome(val)
+        }
+      }
+    }
+  },
+  methods: {
+    findIncome (account) {
+      findUserIncome({
+        walletAddress: account
+      }).then(data => {
+        this.income = (data || [{ quantity: '', symbol: this.$t('teamView.noIncome') }]).map(item => {
+          return item.quantity + item.symbol
+        }).join(' ; ')
+      })
+    }
+  }
 }
 </script>
 

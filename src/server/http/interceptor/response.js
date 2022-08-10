@@ -3,7 +3,12 @@ const axios = require('axios')
 axios.interceptors.response.use(function (response) {
   const res = response.data
   if (res.code === '200') {
-    return Promise.resolve(res.data)
+    if (response.config.interceptors) {
+      // 不做处理
+      return Promise.resolve(res)
+    } else {
+      return Promise.resolve(res.data)
+    }
   } else {
     return Promise.reject(res)
   }

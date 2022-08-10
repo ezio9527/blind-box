@@ -5,11 +5,15 @@
                  @click-left="$router.push({ name: 'home' })">
     </van-nav-bar>
     <!--团队数据-->
-    <data-comp></data-comp>
+    <data-comp :total="total"></data-comp>
     <!--邀请链接-->
     <invitation-comp></invitation-comp>
     <!--我的邀请-->
-    <list-comp></list-comp>
+    <list-comp v-show="!detailsPanel" @query="findDetails" @total="getTotal"></list-comp>
+    <details-comp v-show="detailsPanel" :record="selectRecord" @exit="showList"></details-comp>
+    <!--邀请详情-->
+    <!--<transition name="van-fade" mode="in-out">-->
+    <!--</transition>-->
   </div>
 </template>
 
@@ -17,12 +21,35 @@
 import DataComp from '@/views/team/DataComp'
 import InvitationComp from '@/views/team/InvitationComp'
 import ListComp from '@/views/team/ListComp'
+import DetailsComp from '@/views/team/DetailsComp'
 export default {
   name: 'TeamView',
   components: {
     DataComp,
     InvitationComp,
-    ListComp
+    ListComp,
+    DetailsComp
+  },
+  data () {
+    return {
+      total: 0,
+      detailsPanel: false,
+      selectRecord: {},
+      activeComp: ListComp
+    }
+  },
+  methods: {
+    findDetails (record) {
+      this.detailsPanel = true
+      this.selectRecord = record
+    },
+    showList () {
+      this.detailsPanel = false
+      this.selectRecord = {}
+    },
+    getTotal (val) {
+      this.total = val
+    }
   }
 }
 </script>

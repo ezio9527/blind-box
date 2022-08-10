@@ -5,7 +5,7 @@
       <img src="@img/home/active.png">
       <div>
         <span>{{ $t('homeView.active') }}</span>
-        <span>56</span>
+        <span>{{ activeCount }}</span>
       </div>
     </div>
     <!--入驻项目方-->
@@ -40,16 +40,20 @@
 </template>
 
 <script>
-import { findCooperationAll } from '@/server/http/api'
+import { findCooperationAll, findUserAll } from '@/server/http/api'
 
 export default {
   name: 'MoreComp',
   data () {
     return {
-      projectCount: 0
+      projectCount: 0,
+      activeCount: 0
     }
   },
   created () {
+    findUserAll({ pageSize: 1, pageNo: 1 }).then(res => {
+      this.activeCount = res.totalCount || 0
+    })
     findCooperationAll().then(data => {
       this.projectCount = (data || []).filter(item => {
         return item.type.toString() === '2'

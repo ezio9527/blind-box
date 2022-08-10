@@ -14,11 +14,15 @@
 
 <script>
 import ClipboardJS from 'clipboard'
+import { mapGetters } from 'vuex'
 export default {
   name: 'InvitationComp',
-  data () {
-    return {
-      url: 'https://www.pinterest.com/pin/81135230778126916/1231df'
+  computed: {
+    ...mapGetters({
+      code: 'user/getInvitationCode'
+    }),
+    url () {
+      return location.host + '/' + this.code
     }
   },
   mounted () {

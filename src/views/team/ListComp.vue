@@ -5,20 +5,54 @@
       <div>
         <span>{{ $t('teamView.serial') }}</span>
         <span>{{ $t('teamView.address') }}</span>
-        <span>{{ $t('teamView.achievement') }}</span>
       </div>
-      <div v-for="index in 10" :key="index">
-        <span>{{ index }}</span>
-        <span class="line-word-hidden">0xddskdkdmxcjdsdjkxjsakdeiej4jwj33</span>
-        <span>$10</span>
+      <div v-for="(item, index) in list" :key="index" @click="$emit('query', item)">
+        <span>{{ index + 1 }}</span>
+        <span class="line-word-hidden">{{ item.walletAddress }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { findInvitationRecord } from '@/server/http/api'
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'ListComp'
+  name: 'ListComp',
+  data () {
+    return {
+      pageNo: 1,
+      list: []
+    }
+  },
+  computed: {
+    ...mapGetters({
+      account: 'wallet/getAddress'
+    })
+  },
+  watch: {
+    account: {
+      immediate: true,
+      handler (val) {
+        if (val) {
+          this.findRecord(val)
+        }
+      }
+    }
+  },
+  methods: {
+    findRecord (account) {
+      findInvitationRecord({
+        pageSize: 10,
+        pageNo: this.pageNo,
+        walletAddress: account
+      }).then(res => {
+        this.list = res.data
+        this.$emit('total', res.totalCount)
+      })
+    }
+  }
 }
 </script>
 
@@ -48,10 +82,7 @@ export default {
       }
       span:nth-child(2) {
         flex: 1;
-      }
-      span:nth-child(3) {
-        width: 50px;
-        text-align: center;
+        padding-right: var(--base-padding-large);
       }
     }
     >div:first-child {

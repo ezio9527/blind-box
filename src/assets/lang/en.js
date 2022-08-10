@@ -1,6 +1,7 @@
 module.exports = {
   common: {
-    confirm: 'Confirm it.'
+    confirm: 'Confirm it.',
+    back: 'Back'
   },
   success: {
     copyAddress: 'Address copy succeeded!',
@@ -52,9 +53,15 @@ module.exports = {
     achievements: 'Achievements',
     invitation: 'invitation link',
     myInvitation: 'my invitation',
+    invitationDetails: 'Invitation details',
     serial: 'serial',
     address: 'address',
-    achievement: 'income'
+    achievement: 'income',
+    noIncome: 'no income',
+    time: 'Time',
+    code: 'Invitation code',
+    userIncome: 'Personal',
+    teamIncome: 'Team'
   },
   // 我的资产记录
   recordView: {
