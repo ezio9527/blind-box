@@ -22,7 +22,8 @@ const mutations = {
 const actions = {
   findUser ({ commit }, address) {
     findUser({ walletAddress: address }).then(data => {
-      commit('setInvitationCode', data.invCode)
+      data = data || { invCode: '' }
+      commit('setInvitationCode', data)
     })
   }
 }
