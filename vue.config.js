@@ -21,6 +21,18 @@ module.exports = defineConfig({
         return args
       })
   },
+  devServer: {
+    proxy: {
+      '/api/*': {
+        target: 'http://154.208.100.176:8088',
+        changeOrigin: true,
+        pathRewrite: {
+          '/api': ''
+        }
+      }
+    }
+    // https: true
+  },
   configureWebpack: {
     plugins: [
       new NodePolyfillPlugin(),

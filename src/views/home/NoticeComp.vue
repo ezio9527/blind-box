@@ -1,0 +1,67 @@
+<template>
+  <div class="notice-comp">
+    <svg class="icon" aria-hidden="true">
+      <use xlink:href="#icon-notifying"></use>
+    </svg>
+    <van-swipe :show-indicators="false" :autoplay="2000" vertical>
+      <van-swipe-item class="line-word-hidden" v-for="(notice, index) in noticeList" :key="index">{{ notice.title }}</van-swipe-item>
+    </van-swipe>
+  </div>
+</template>
+
+<script>
+import { findNoticeAll } from '@/server/http/api'
+
+export default {
+  name: 'NoticeComp',
+  data () {
+    return {
+      noticeAllList: []
+    }
+  },
+  computed: {
+    noticeList () {
+      return this.noticeAllList.filter(item => {
+        return item.type.toString() === '1'
+      })
+    }
+  },
+  created () {
+    findNoticeAll().then(data => {
+      this.noticeAllList = data
+    })
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.notice-comp {
+  margin-top: 31px;
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: var(--base-padding-medium);
+  padding-top: 0;
+  padding-bottom: 0;
+  font: var(--base-text-font-default);
+  color: var(--base-text-color-default);
+  background-color: var(--base-background-color-gray);
+  border-radius: var(--base-border-radius-normal);
+
+  svg {
+    font-size: var(--base-font-size-medium);
+    color: #575d87;
+  }
+
+  .van-swipe {
+    margin-left: 10px;
+    height: 100%;
+    flex-grow: 1;
+
+    .van-swipe-item {
+      height: 34px;
+      line-height: 34px;
+    }
+  }
+}
+</style>

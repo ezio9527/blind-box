@@ -1,11 +1,15 @@
 import { createStore } from 'vuex'
-import user from './modules/user'
+import imageBaseUrl from './modules/imageBaseUrl'
+import wallet from './modules/wallet'
+import contract from './modules/contract'
 
 // const debug = process.env.NODE_ENV !== 'production'
 
 export default createStore({
   modules: {
-    user
+    imageBaseUrl,
+    wallet,
+    contract
   }
   // strict: debug,
   // plugins: debug ? [createLogger()] : []

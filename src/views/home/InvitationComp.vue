@@ -1,0 +1,75 @@
+<template>
+ <div class="invitation-comp">
+   <div @click="$router.push({ name: 'team' })">
+     <span>{{ $t('homeView.invitation') }}</span>
+     <svg class="icon" aria-hidden="true">
+       <use xlink:href="#icon-right-arrow"></use>
+     </svg>
+   </div>
+   <div id="invitation-url-copy">
+     <span>{{ url }}</span>
+     <svg class="icon" aria-hidden="true">
+       <use xlink:href="#icon-copy"></use>
+     </svg>
+   </div>
+ </div>
+</template>
+
+<script>
+import ClipboardJS from 'clipboard'
+export default {
+  name: 'InvitationComp',
+  data () {
+    return {
+      url: 'https://www.pinterest.com/pin/81135230778126916/1231df'
+    }
+  },
+  mounted () {
+    const clipboard = new ClipboardJS('#invitation-url-copy', {
+      text: () => {
+        return this.url
+      }
+    })
+    clipboard.on('success', e => {
+      this.$toast(this.$t('success.copyUrl'))
+    })
+    clipboard.on('error', e => {
+      this.$toast(this.$t('error.copyUrl'))
+    })
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.invitation-comp {
+  margin-top: 20px;
+  border-radius: var(--base-border-radius-sm);
+  background-color: var(--base-background-color-gray2);
+  padding: var(--base-padding-large);
+  div:first-child {
+    display: flex;
+    justify-content: space-between;
+    font: var(--base-text-font-default);
+    color: var(--base-text-color-dark);
+    svg {
+      font-size: var(--base-font-size-mini);
+    }
+  }
+  div:last-child {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    background-color: var(--base-background-color-gray3);
+    font: var(--base-text-font-default);
+    color: var(--base-text-color-default);
+    padding: var(--base-padding-normal);
+    span {
+      word-break: break-all;
+      margin-right: 28px;
+    }
+    svg {
+      font-size: var(--base-font-size-super-large);
+    }
+  }
+}
+</style>

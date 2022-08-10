@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 3502716 */
-  src: url('iconfont.woff2?t=1657162769903') format('woff2'),
-       url('iconfont.woff?t=1657162769903') format('woff'),
-       url('iconfont.ttf?t=1657162769903') format('truetype');
+  font-family: "iconfont"; /* Project id 3558970 */
+  src: url('iconfont.woff2?t=1659328929202') format('woff2'),
+       url('iconfont.woff?t=1659328929202') format('woff'),
+       url('iconfont.ttf?t=1659328929202') format('truetype');
 }
 
 .iconfont {
@@ -13,55 +13,43 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-triangle:before {
-  content: "\e601";
+.icon-user:before {
+  content: "\e636";
 }
 
-.icon-right-arrow2:before {
-  content: "\e628";
+.icon-telegram:before {
+  content: "\e8db";
 }
 
-.icon-developing:before {
-  content: "\e610";
-}
-
-.icon-checked:before {
-  content: "\e608";
-}
-
-.icon-dollar:before {
-  content: "\e880";
-}
-
-.icon-earth:before {
-  content: "\e781";
-}
-
-.icon-settings:before {
-  content: "\e630";
-}
-
-.icon-order:before {
-  content: "\e737";
-}
-
-.icon-share:before {
-  content: "\e60f";
-}
-
-.icon-record:before {
-  content: "\e810";
-}
-
-.icon-time:before {
-  content: "\e65f";
-}
-
-.icon-head-img:before {
-  content: "\e677";
+.icon-copy:before {
+  content: "\e637";
 }
 
 .icon-right-arrow:before {
+  content: "\e678";
+}
+
+.icon-search:before {
+  content: "\e632";
+}
+
+.icon-twitter:before {
+  content: "\e652";
+}
+
+.icon-email:before {
+  content: "\e77e";
+}
+
+.icon-notifying:before {
+  content: "\e60a";
+}
+
+.icon-more:before {
   content: "\e600";
+}
+
+.icon-language:before {
+  content: "\e681";
 }
 

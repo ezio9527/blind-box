@@ -22,7 +22,7 @@ export default {
   margin-top: 15px;
   width: 163px;
   height: 248px;
-  border-radius: var(--base-border-radius-lg);
+  border-radius: var(--base-border-radius-large);
   border: 1px solid var(--base-primary-color);
   padding: 5px 6px 13px 5px;
   .list-card {

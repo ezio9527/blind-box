@@ -1,0 +1,630 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "boxId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_owenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_proxyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_owenIncome",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_totalQuanity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address[]",
+				"name": "_buyAddress",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_prices",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "_proportionAddress",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_totalNum",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_proQuantity",
+				"type": "uint256[]"
+			}
+		],
+		"name": "addBox",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_boxId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_fromAddress",
+				"type": "address"
+			}
+		],
+		"name": "buyBox",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_platformAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "boxId",
+				"type": "uint256"
+			}
+		],
+		"name": "BoxIdNotExit",
+		"type": "error"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_boxId",
+				"type": "uint256"
+			}
+		],
+		"name": "addBoxEvn",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_boxId",
+				"type": "uint256"
+			}
+		],
+		"name": "delBox",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_boxId",
+				"type": "uint256"
+			}
+		],
+		"name": "delBoxEvn",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_to",
+				"type": "address"
+			}
+		],
+		"name": "doToken",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_erc20Address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "ercApprove",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_boxId",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "totalNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sellNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"indexed": false,
+				"internalType": "struct BlindBox.Proportion",
+				"name": "_proportion",
+				"type": "tuple"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "_buyErcAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "_fromAddress",
+				"type": "address"
+			}
+		],
+		"name": "openBoxEvn",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "val",
+				"type": "bool"
+			}
+		],
+		"name": "setPaused",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_platformAddress",
+				"type": "address"
+			}
+		],
+		"name": "setPlatformAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "_paused",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "alertBuys",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "boxPropertys",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "owenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "proxyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "owenIncome",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "sellQuantity",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "boxs",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "owenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "proxyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "owenIncome",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "sellQuantity",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "boxStartId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "buys",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "ercAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_boxId",
+				"type": "uint256"
+			}
+		],
+		"name": "getInfo",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "owenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "proxyAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "owenIncome",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sellQuantity",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct BlindBox.Box",
+				"name": "",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "ercAddress",
+						"type": "address"
+					}
+				],
+				"internalType": "struct BlindBox.Buy[]",
+				"name": "",
+				"type": "tuple[]"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "totalNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sellNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"internalType": "struct BlindBox.Proportion[]",
+				"name": "",
+				"type": "tuple[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "inviteLink",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "platformAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "proportions",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "totalNum",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "sellNum",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
