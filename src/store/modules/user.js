@@ -1,13 +1,17 @@
 import { findUser } from '@/server/http/api'
 
 const state = () => ({
-  invitationCode: ''
+  invitationCode: '',
+  parent: ''
 })
 
 // getters
 const getters = {
   getInvitationCode: (state) => {
     return state.invitationCode
+  },
+  getParent: (state) => {
+    return state.parent
   }
 }
 
@@ -15,6 +19,9 @@ const getters = {
 const mutations = {
   setInvitationCode (state, code) {
     state.invitationCode = code
+  },
+  setParent (state, parent) {
+    state.parent = parent
   }
 }
 
@@ -22,8 +29,9 @@ const mutations = {
 const actions = {
   findUser ({ commit }, address) {
     findUser({ walletAddress: address }).then(data => {
-      data = data || { invCode: '' }
-      commit('setInvitationCode', data)
+      data = data || { invCode: '', parent: '' }
+      commit('setInvitationCode', data.invCode)
+      commit('setParent', data.parent)
     })
   }
 }

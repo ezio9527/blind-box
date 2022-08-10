@@ -1,7 +1,10 @@
 <template>
   <div class="contract-comp" id="contract-copy">
     <span>{{ $t('homeView.address') }}:</span>
-    <span class="line-word-hidden">{{ address }}</span>
+    <div>
+      <span class="line-word-hidden">{{ slice[0] }}</span>
+      <span>{{ slice[1] }}</span>
+    </div>
     <svg class="icon" aria-hidden="true">
       <use xlink:href="#icon-copy"></use>
     </svg>
@@ -17,6 +20,14 @@ export default {
   data () {
     return {
       address: contract.CrazyBox.address
+    }
+  },
+  computed: {
+    slice () {
+      const str = this.address
+      const length = str.length
+      const half = parseInt((length * 0.8).toString())
+      return [str.slice(0, half), str.slice(half, length)]
     }
   },
   mounted () {
@@ -40,14 +51,23 @@ export default {
   align-items: center;
   font: var(--base-text-font-default);
 
-  span:first-child {
+  >span:first-child {
     margin-right: 6px;
     color: var(--base-text-color-dark);
   }
 
-  span:nth-child(2) {
-    flex: 1;
+  div:nth-child(2) {
+    width: 250px;
     color: var(--base-text-color-default);
+    span:first-child {
+      display: inline-block;
+      width: 70%;
+    }
+    span:last-child {
+      display: inline-block;
+      width: 30%;
+      margin-left: -6px;
+    }
   }
 
   svg {

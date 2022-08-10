@@ -6,7 +6,7 @@
        <use xlink:href="#icon-right-arrow"></use>
      </svg>
    </div>
-   <div id="invitation-url-copy">
+   <div id="invitation-url-copy" v-if="code">
      <span>{{ url }}</span>
      <svg class="icon" aria-hidden="true">
        <use xlink:href="#icon-copy"></use>

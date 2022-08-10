@@ -50,7 +50,7 @@ export default {
   },
   data () {
     return {
-      time: '',
+      time: 0,
       boxName: ''
     }
   },

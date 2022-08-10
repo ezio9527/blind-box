@@ -1,7 +1,10 @@
 <template>
   <div class="data-comp">
     <div>{{ $t('teamView.superiors') }}</div>
-    <div>0xddskdkdmxcjdsdjkxjsakdeiej4jwj33</div>
+    <div>
+      <span class="line-word-hidden">{{ slice[0] }}</span>
+      <span>{{ slice[1] }}</span>
+    </div>
     <div>
       <div>
         <div>{{ $t('teamView.manNumber') }}</div>
@@ -27,8 +30,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      account: 'wallet/getAddress'
-    })
+      account: 'wallet/getAddress',
+      parent: 'user/getParent'
+    }),
+    slice () {
+      const str = this.parent || this.account
+      const length = str.length
+      const half = parseInt((length * 0.8).toString())
+      return [str.slice(0, half), str.slice(half, length)]
+    }
   },
   data () {
     return {
@@ -73,13 +83,23 @@ export default {
   font-weight: var(--base-text-weight-medium);
   padding: var(--base-padding-large);
   line-height: 17px;
-  div:nth-child(1) {
+  >div:nth-child(1) {
     margin-bottom: 3px;
   }
-  div:nth-child(2) {
+  >div:nth-child(2) {
     margin-bottom: 24px;
+    width: 200px;
+    span:first-child {
+      display: inline-block;
+      width: 160px;
+    }
+    span:last-child {
+      display: inline-block;
+      width: 40px;
+      margin-left: -6px;
+    }
   }
-  div:nth-child(3) {
+  >div:nth-child(3) {
     display: flex;
     text-align: center;
     >div {

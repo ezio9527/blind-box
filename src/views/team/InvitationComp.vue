@@ -1,5 +1,5 @@
 <template>
- <div class="invitation-comp">
+ <div class="invitation-comp" v-if="code">
    <div @click="$router.push({ name: 'team' })">
      <span>{{ $t('teamView.invitation') }}</span>
    </div>
@@ -70,6 +70,7 @@ export default {
     span {
       word-break: break-all;
       margin-right: 28px;
+      flex: 1;
     }
     svg {
       color: var(--base-text-color-blue);
