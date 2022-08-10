@@ -6,8 +6,8 @@
       <div><span>{{ $t('teamView.time') }}</span><span>{{ record.createTime }}</span></div>
       <div><span>{{ $t('teamView.address') }}</span><span>{{ record.walletAddress }}</span></div>
       <div><span>{{ $t('teamView.code') }}</span><span>{{ record.invCode }}</span></div>
-      <div><span>{{ $t('teamView.user') }}</span><span>{{ userIncome }}</span></div>
-      <div><span>{{ $t('teamView.team') }}</span><span>{{ teamIncome }}</span></div>
+      <div><span>{{ $t('teamView.userIncome') }}</span><span>{{ userIncome }}</span></div>
+      <div><span>{{ $t('teamView.teamIncome') }}</span><span>{{ teamIncome }}</span></div>
     </div>
   </div>
 </template>
