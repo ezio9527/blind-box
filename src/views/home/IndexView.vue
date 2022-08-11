@@ -48,10 +48,18 @@ export default {
     OrganizationComp,
     LanguageComp
   },
+  props: {
+    id: String
+  },
   data () {
     return {
       time: 0,
       boxName: ''
+    }
+  },
+  created () {
+    if (this.$route.params[0]) {
+      this.$store.dispatch('user/findInviter', this.$route.params[0])
     }
   },
   methods: {

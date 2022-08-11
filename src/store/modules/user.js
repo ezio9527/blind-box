@@ -1,8 +1,8 @@
-import { findUser } from '@/server/http/api'
+import { findAddressByInvitation, findUser } from '@/server/http/api'
 
 const state = () => ({
-  invitationCode: '',
-  parent: ''
+  invitationCode: '', // 自己的邀请码
+  parent: '' // 邀请者(我的上级)
 })
 
 // getters
@@ -31,6 +31,12 @@ const actions = {
     findUser({ walletAddress: address }).then(data => {
       data = data || { invCode: '', parent: '' }
       commit('setInvitationCode', data.invCode)
+      commit('setParent', data.parent)
+    })
+  },
+  findInviter ({ commit }, code) {
+    findAddressByInvitation({ invCode: code }).then(data => {
+      data = data || { invCode: '', parent: '' }
       commit('setParent', data.parent)
     })
   }

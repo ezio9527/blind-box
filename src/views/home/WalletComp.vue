@@ -33,7 +33,6 @@ export default {
       Wallet.enable(walletConf).then(account => {
         this.$store.commit('wallet/setAddress', account)
         this.$store.dispatch('contract/initialize', account)
-        localStorage.setItem('enable', 'true')
       })
     }
   }

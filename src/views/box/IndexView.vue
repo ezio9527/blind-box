@@ -37,7 +37,7 @@
     </div>
     <!--开启盲盒-->
     <div class="box-open">
-      <button @click="buy" :disabled="disabled">{{ $t('boxView.open') }}</button>
+      <button @click="buy" :disabled="disabled">{{ disabled ? $t('boxView.close') : $t('boxView.open') }}</button>
     </div>
     <!--开启弹窗-->
     <dialog-comp v-model:visible="dialog"></dialog-comp>
@@ -73,10 +73,11 @@ export default {
     ...mapGetters({
       baseUrl: 'imageBaseUrl/getUrl',
       boxContract: 'contract/getBoxContract',
-      account: 'wallet/getAddress'
+      account: 'wallet/getAddress',
+      parent: 'user/getParent'
     }),
     disabled () {
-      return (this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) > 0
+      return (this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) <= 0
     },
     ercContract () {
       if (this.account && this.boxDetails.box.contractAddress) {
@@ -98,9 +99,13 @@ export default {
     buy () {
       this.approve(contract.CrazyBox.address, 999999999999999).then(() => {
         this.$toast.loading({ message: this.$t('common.transaction') })
-        this.boxContract.buy({
+        const data = {
           boxId: this.boxDetails.box.id
-        }).then(hash => {
+        }
+        if (this.parent) {
+          data.inviter = this.parent
+        }
+        this.boxContract.buy(data).then(hash => {
           console.log('完成交易', hash)
           this.$toast.success({ message: this.$t('success.transaction') })
           this.boxContract.getTransactionReceipt(hash).then()

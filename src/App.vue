@@ -1,9 +1,5 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <transition name="van-fade" mode="out-in">
-      <component :is="Component"/>
-    </transition>
-  </router-view>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -24,21 +20,18 @@ export default {
   methods: {
     // 获取授权
     enable () {
-      if (localStorage.getItem('enable')) {
-        Wallet.enable(walletConf).then(account => {
-          this.$store.commit('wallet/setAddress', account)
-          this.$store.dispatch('contract/initialize', account)
-          this.$store.dispatch('user/findUser', account)
-          localStorage.setItem('enable', 'true')
-        })
-      }
+      Wallet.enable(walletConf).then(account => {
+        this.$store.commit('wallet/setAddress', account)
+        this.$store.dispatch('contract/initialize', account)
+        this.$store.dispatch('user/findUser', account)
+      })
     },
     // 监听钱包
     listen () {
       if (window.ethereum) {
         window.ethereum.on('chainChanged', chainId => {
           console.log('chainChanged')
-          if (chainId === walletConf.chainId && localStorage.getItem('enable')) {
+          if (chainId === walletConf.chainId) {
             this.enable()
           }
         })
