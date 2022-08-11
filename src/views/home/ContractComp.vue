@@ -66,7 +66,7 @@ export default {
     span:last-child {
       display: inline-block;
       width: 30%;
-      margin-left: -6px;
+      margin-left: -1px;
     }
   }
 

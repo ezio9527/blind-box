@@ -1,21 +1,29 @@
 module.exports = {
   common: {
     confirm: 'Confirm it.',
-    back: 'Back'
+    back: 'Back',
+    allowance: 'Authorization available! ',
+    allowanceError: 'Authorization query failed! Please check wallet connection status ',
+    approve: 'Approving! ',
+    transaction: 'In transaction!'
   },
   success: {
     copyAddress: 'Address copy succeeded!',
     copyUrl: 'Link copied successfully!',
     copyTelegram: 'Telegram copied successfully!',
     copyTwitter: 'Twitter copied successfully!',
-    copyEmail: 'Email copied successfully!'
+    copyEmail: 'Email copied successfully!',
+    approve: 'Authorization successfully!',
+    transaction: 'Transaction successfully!'
   },
   error: {
     copyAddress: 'Failed to copy the address!',
     copyUrl: 'Link copy failed!',
     copyTelegram: 'Telegram copy failed!',
     copyTwitter: 'Twitter copy failed!',
-    copyEmail: 'Email copy failed!'
+    copyEmail: 'Email copy failed!',
+    approve: 'Authorization failed!',
+    transaction: 'Transaction failed!'
   },
   component: {
   },
@@ -35,11 +43,13 @@ module.exports = {
   },
   // 盲盒详情
   boxView: {
+    connect: 'connect',
     title: 'Blind box details',
     totalNumber: 'total',
     lastNumber: 'quantity left over',
     boxContent: 'blind boxContent',
     open: 'Open the blind box',
+    close: 'Activity end',
     tips: '%{rate}% chance of getting %{number}个 %{symbol}',
     award: 'Blind Box Reward',
     tips1: 'Congratulations on your acquisition',

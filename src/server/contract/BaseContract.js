@@ -145,7 +145,6 @@ class BaseContract {
         }
         window.ethereum.sendAsync(payload, (error, response) => {
           if (error) {
-            console.log('发送交易失败', error)
             reject(error)
           }
           if (response.result) {
@@ -184,7 +183,7 @@ class BaseContract {
           queryTimes = 0
           reject(new Error('timeout'))
         }
-      }, 2000)
+      }, 4000)
     })
   }
 

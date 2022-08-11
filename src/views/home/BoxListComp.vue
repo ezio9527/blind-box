@@ -56,10 +56,7 @@ export default {
   },
   methods: {
     findBox () {
-      const toast = this.$toast.loading({
-        duration: 0,
-        forbidClick: true
-      })
+      const toast = this.$toast.loading({})
       findBoxAll({ name: this.boxName }).then(data => {
         this.boxAllList = data || []
       }).finally(() => {

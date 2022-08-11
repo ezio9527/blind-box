@@ -37,7 +37,7 @@
     </div>
     <!--开启盲盒-->
     <div class="box-open">
-      <button @click="buy">{{ $t('boxView.open') }}</button>
+      <button @click="buy" :disabled="disabled">{{ $t('boxView.open') }}</button>
     </div>
     <!--开启弹窗-->
     <dialog-comp v-model:visible="dialog"></dialog-comp>
@@ -75,6 +75,9 @@ export default {
       boxContract: 'contract/getBoxContract',
       account: 'wallet/getAddress'
     }),
+    disabled () {
+      return (this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) > 0
+    },
     ercContract () {
       if (this.account && this.boxDetails.box.contractAddress) {
         return new ERCContract(this.account, this.boxDetails.box.contractAddress)
@@ -93,47 +96,23 @@ export default {
       })
     },
     buy () {
-      this.approve(contract.CrazyBox.address, this.boxDetails.box.price).then(() => {
+      this.approve(contract.CrazyBox.address, 999999999999999).then(() => {
+        this.$toast.loading({ message: this.$t('common.transaction') })
         this.boxContract.buy({
           boxId: this.boxDetails.box.id
         }).then(hash => {
+          console.log('完成交易', hash)
+          this.$toast.success({ message: this.$t('success.transaction') })
           this.boxContract.getTransactionReceipt(hash).then()
+        }).catch(e => {
+          this.$toast.fail({ message: this.$t('error.transaction') })
         })
       })
-
-      // this.ivyContract.pledge({
-      //   amount: this.number
-      // }).then(hash => {
-      //   this.ivyContract.getTransactionReceipt(hash).then(() => {
-      //     this.$store.commit('transaction/setPledge', false)
-      //     this.$store.commit('notice/clearNotice', Notice.transaction.level)
-      //     this.$notify({
-      //       type: 'success',
-      //       message: this.$t('common.pledgeSuccess', { number: this.number, symbol: 'LP' }),
-      //       duration: 5000
-      //     })
-      //   }).catch(() => {
-      //     this.$store.commit('transaction/setPledge', false)
-      //     this.$store.commit('notice/clearNotice', Notice.transaction.level)
-      //     this.$notify({
-      //       type: 'danger',
-      //       message: this.$t('common.pledgeFailed'),
-      //       duration: 5000
-      //     })
-      //   })
-      // }).catch(() => {
-      //   this.$store.commit('transaction/setPledge', false)
-      //   this.$store.commit('notice/clearNotice', Notice.transaction.level)
-      //   this.$notify({
-      //     type: 'danger',
-      //     message: this.$t('common.pledgeFailed'),
-      //     duration: 5000
-      //   })
-      // })
     },
     approve (address, number) {
       return new Promise(resolve => {
         // 查询授权
+        this.$toast.loading({ message: this.$t('common.allowance') })
         this.ercContract.allowance(address).then(num => {
           number = Web3.utils.toWei(number.toString())
           number = Web3.utils.toBN(number.toString())
@@ -142,12 +121,18 @@ export default {
             resolve()
           } else {
             // 避免精度导致的授权数量不足，影响后续交易失败，这里直接用交易数量请求授权
+            this.$toast.loading({ message: this.$t('common.approve') })
             this.ercContract.approve(address, number).then(() => {
-              this.$toast.success(this.$t('common.approveWaiting'))
+              this.$toast.success({ duration: 0, message: this.$t('success.approve') })
+            }).catch(e => {
+              this.$toast.fail({ duration: 0, message: this.$t('error.approve') })
             }).finally(() => {
               resolve()
             })
           }
+        }).catch(e => {
+          resolve()
+          this.$toast.fail({ duration: 0, message: this.$t('common.allowanceError') })
         })
       })
     }

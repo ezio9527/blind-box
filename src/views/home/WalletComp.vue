@@ -1,7 +1,10 @@
 <template>
   <div class="wallet-comp">
     <img src="@img/home/logo.png">
-    <div><span v-if="account" class="line-word-hidden">{{ account }}</span><span @click="enable" v-else>连接钱包</span></div>
+    <div>
+      <span v-if="account" class="line-word-hidden">{{ account }}</span>
+      <span @click="enable" v-else>{{ this.$t('boxView.connect') }}</span>
+    </div>
     <svg class="icon" aria-hidden="true" @click="enable">
       <use xlink:href="#icon-more"></use>
     </svg>
