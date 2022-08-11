@@ -4,7 +4,12 @@
       <use xlink:href="#icon-notifying"></use>
     </svg>
     <van-swipe :show-indicators="false" :autoplay="2000" vertical>
-      <van-swipe-item class="line-word-hidden" v-for="(notice, index) in noticeList" :key="index" @click="notify(notice)">{{ notice.title }}</van-swipe-item>
+      <template v-if="(noticeList || []).length > 0">
+        <van-swipe-item class="line-word-hidden" v-for="(notice, index) in noticeList" :key="index" @click="notify(notice)">{{ notice.title }}</van-swipe-item>
+      </template>
+      <template v-else>
+        <van-swipe-item class="line-word-hidden">{{ $t('homeView.noNotice') }}</van-swipe-item>
+      </template>
     </van-swipe>
   </div>
 </template>

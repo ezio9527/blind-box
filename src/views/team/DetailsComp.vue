@@ -25,16 +25,7 @@ export default {
         createTime: '',
         walletAddress: '',
         invCode: ''
-      }),
-      validator (val) {
-        if (!val) {
-          return {
-            createTime: '',
-            walletAddress: '',
-            invCode: ''
-          }
-        }
-      }
+      })
     }
   },
   data () {

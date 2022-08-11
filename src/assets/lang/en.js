@@ -5,7 +5,8 @@ module.exports = {
     allowance: 'Authorization available! ',
     allowanceError: 'Authorization query failed! Please check wallet connection status ',
     approve: 'Approving! ',
-    transaction: 'In transaction!'
+    transaction: 'In transaction!',
+    noMore: 'No more!'
   },
   success: {
     copyAddress: 'Address copy succeeded!',
@@ -29,6 +30,7 @@ module.exports = {
   },
   // 主页
   homeView: {
+    noNotice: 'No notice',
     address: 'Contract address',
     active: 'Active',
     project: 'Project',

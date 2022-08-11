@@ -5,7 +5,8 @@ module.exports = {
     allowance: '授权查询中!',
     allowanceError: '授权查询失败!请检查钱包连接状态',
     approve: '正在授权!',
-    transaction: '交易处理中!'
+    transaction: '交易处理中!',
+    noMore: '没有更多了!'
   },
   success: {
     copyAddress: '地址复制成功!',
@@ -29,6 +30,7 @@ module.exports = {
   },
   // 主页
   homeView: {
+    noNotice: '暂无通知',
     address: '合约地址',
     active: '当前活跃地址数',
     project: '入驻项目方',
