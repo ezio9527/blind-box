@@ -5,7 +5,7 @@
     <!--轮播图-->
     <swipe-comp></swipe-comp>
     <!--公告-->
-    <notice-comp></notice-comp>
+    <notice-comp @notify="notify"></notice-comp>
     <!--合约地址-->
     <contract-comp></contract-comp>
     <!--其他的功能-->
@@ -20,6 +20,8 @@
     <organization-comp></organization-comp>
     <!--语言切换-->
     <language-comp></language-comp>
+    <!--开启弹窗-->
+    <notice-dialog-comp v-model:visible="dialog" :notice="notice"></notice-dialog-comp>
   </div>
 </template>
 
@@ -34,6 +36,7 @@ import SearchComp from '@/views/home/SearchComp'
 import BoxListComp from '@/views/home/BoxListComp'
 import OrganizationComp from '@/views/home/OrganizationComp'
 import LanguageComp from '@/views/home/LanguageComp'
+import DialogComp from '@/views/home/DialogComp'
 export default {
   name: 'HomeView',
   components: {
@@ -46,13 +49,16 @@ export default {
     SearchComp,
     BoxListComp,
     OrganizationComp,
-    LanguageComp
+    LanguageComp,
+    NoticeDialogComp: DialogComp
   },
   props: {
     id: String
   },
   data () {
     return {
+      dialog: false,
+      notice: {},
       time: 0,
       boxName: ''
     }
@@ -66,6 +72,10 @@ export default {
     search (val) {
       this.boxName = val
       this.time = +new Date()
+    },
+    notify (notice) {
+      this.dialog = true
+      this.notice = notice
     }
   }
 }

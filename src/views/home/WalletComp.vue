@@ -1,9 +1,15 @@
 <template>
   <div class="wallet-comp">
-    <img src="@img/home/logo.png">
-    <div>
-      <span v-if="account" class="line-word-hidden">{{ account }}</span>
-      <span @click="enable" v-else>{{ this.$t('boxView.connect') }}</span>
+    <img class="wallet-logo" src="@img/home/logo.png">
+    <div class="wallet-wrapper">
+      <div class="wallet-address" v-if="account">
+        <span class="line-word-hidden">{{ slice[0] }}</span>
+        <span>{{ slice[1] }}</span>
+      </div>
+      <div class="wallet-connect" v-else>
+        <div><img src="@img/box/box-bg.png" /></div>
+        <span @click="enable">{{ this.$t('boxView.connect') }}</span>
+      </div>
     </div>
     <svg class="icon" aria-hidden="true" @click="enable">
       <use xlink:href="#icon-more"></use>
@@ -13,7 +19,7 @@
 
 <script>
 import Wallet from '@/pluins/Wallet'
-import walletConf from '@/assets/data/wallet.test.conf.json'
+import walletConf from '@/assets/data/wallet.conf.js'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -25,7 +31,13 @@ export default {
   computed: {
     ...mapGetters({
       account: 'wallet/getAddress'
-    })
+    }),
+    slice () {
+      const str = this.account
+      const length = str.length
+      const half = parseInt((length * 0.9).toString())
+      return [str.slice(0, half), str.slice(half, length)]
+    }
   },
   methods: {
     // 获取授权
@@ -46,29 +58,65 @@ export default {
   display: flex;
   align-items: center;
 
-  img {
+  .wallet-logo {
     width: 24px;
   }
 
-  div {
+  .wallet-wrapper {
     flex: 1;
     display: flex;
     justify-content: flex-end;
-
-    span {
+    .wallet-connect, .wallet-address {
       width: 140px;
-      display: inline-block;
+      padding: 3px 16px;
+      border-radius: 1000px;
       background-color: var(--base-background-color-gray2);
       font: var(--base-text-font-default);
       color: var(--base-text-color-default);
-      padding: 3px 16px;
-      border-radius: 1000px;
+    }
+    .wallet-connect {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 26px;
+      overflow: hidden;
+      div {
+        width: 32px;
+        text-align: center;
+        img {
+          width: 24px;
+          animation: dot 1500ms linear infinite;
+        }
+      }
+    }
+    .wallet-address {
+      span:first-child {
+        display: inline-block;
+        width: 70%;
+      }
+      span:last-child {
+        display: inline-block;
+        width: 30%;
+        margin-left: -2px;
+      }
     }
   }
 
   svg {
     margin-left: 14px;
     color: var(--base-text-color-default);
+  }
+
+  @keyframes dot {
+    0% {
+      width: 24px;
+    }
+    50% {
+      width: 32px;
+    }
+    100% {
+      width: 24px;
+    }
   }
 }
 </style>

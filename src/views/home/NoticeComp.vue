@@ -4,7 +4,7 @@
       <use xlink:href="#icon-notifying"></use>
     </svg>
     <van-swipe :show-indicators="false" :autoplay="2000" vertical>
-      <van-swipe-item class="line-word-hidden" v-for="(notice, index) in noticeList" :key="index">{{ notice.title }}</van-swipe-item>
+      <van-swipe-item class="line-word-hidden" v-for="(notice, index) in noticeList" :key="index" @click="notify(notice)">{{ notice.title }}</van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -30,6 +30,11 @@ export default {
     findNoticeAll().then(data => {
       this.noticeAllList = data
     })
+  },
+  methods: {
+    notify (notice) {
+      this.$emit('notify', notice)
+    }
   }
 }
 </script>

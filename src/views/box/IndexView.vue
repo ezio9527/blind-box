@@ -39,14 +39,11 @@
     <div class="box-open">
       <button @click="buy" :disabled="disabled">{{ disabled ? $t('boxView.close') : $t('boxView.open') }}</button>
     </div>
-    <!--开启弹窗-->
-    <dialog-comp v-model:visible="dialog"></dialog-comp>
   </div>
 </template>
 
 <script>
 import { findBoxById } from '@/server/http/api'
-import DialogComp from '@/views/box/DialogComp'
 import { mapGetters } from 'vuex'
 import Web3 from 'web3'
 import ERCContract from '@/server/contract/ERCContract'
@@ -57,12 +54,8 @@ export default {
   props: {
     id: String
   },
-  components: {
-    DialogComp
-  },
   data () {
     return {
-      dialog: false,
       boxDetails: {
         box: {},
         proportions: {}

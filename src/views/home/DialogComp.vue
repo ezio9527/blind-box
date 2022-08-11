@@ -1,8 +1,8 @@
 <template>
   <van-overlay class="dialog-comp" :show="show" :lock-scroll="false">
     <div class="dialog-comp_wrapper" @click.stop>
-      <p>{{ $t('boxView.award') }}</p>
-      <p><span>{{ $t('boxView.tips1') }}</span><span>100 USDT</span><span>{{ $t('boxView.tips2') }}</span></p>
+      <p>{{ notice.title }}</p>
+      <div v-html="notice.content"></div>
       <div><button @click="close">{{ $t('common.confirm') }}</button></div>
     </div>
   </van-overlay>
@@ -15,6 +15,13 @@ export default {
     visible: {
       type: Boolean,
       default: false
+    },
+    notice: {
+      type: Object,
+      default: () => ({
+        title: '',
+        content: ''
+      })
     }
   },
   data () {
@@ -46,22 +53,20 @@ export default {
     border-radius: var(--base-border-radius-sm);
     background-color: var(--base-background-color-white);
     padding: 30px 30px 20px 30px;
-    p:nth-child(1) {
+    >p:nth-child(1) {
       margin-bottom: 30px;
       text-align: center;
       font: var(--base-text-font-default);
       font-size: var(--base-font-size-medium);
       color: var(--base-text-color-black);
     }
-    p:nth-child(2) {
+    >div:nth-child(2) {
+      word-break: break-word;
       font: var(--base-text-font-default);
       font-size: var(--base-font-size-medium);
       color: var(--base-text-color-gray2);
-      span:nth-child(2) {
-        color: var(--base-text-color-red);
-      }
     }
-    div:nth-child(3) {
+    >div:nth-child(3) {
       text-align: center;
       button {
         margin-top: 48px;

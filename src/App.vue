@@ -7,7 +7,7 @@ import { Locale } from 'vant'
 import zhCN from 'vant/es/locale/lang/zh-CN'
 import enUS from 'vant/es/locale/lang/en-US'
 import Wallet from '@/pluins/Wallet'
-import walletConf from '@/assets/data/wallet.test.conf.json'
+import walletConf from '@/assets/data/wallet.conf.js'
 
 export default {
   name: 'App',

@@ -17,7 +17,7 @@ module.exports = defineConfig({
     config
       .plugin('html')
       .tap(args => {
-        args[0].title = 'blind-box'
+        args[0].title = 'xbox'
         return args
       })
   },
