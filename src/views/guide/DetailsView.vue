@@ -1,7 +1,6 @@
 <template>
   <div class="details-view">
-    <van-nav-bar class="van-nav-bar_light"
-                 :title="$t('guideView.title')"
+    <van-nav-bar :title="$t('guideView.title')"
                  :left-arrow="true"
                  @click-left="$router.push({ name: 'guideList' })">
     </van-nav-bar>
@@ -34,6 +33,8 @@ export default {
 .details-view {
   flex: 1;
   padding: var(--base-padding-large);
+  background-color: var(--base-background-color-dark);
+  color: var(--base-text-color-default);
   padding-top: 0;
   .van-nav-bar {
     margin: 0 -15px 0 -15px;

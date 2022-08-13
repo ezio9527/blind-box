@@ -11,7 +11,7 @@ const getters = {
     return state.invitationCode
   },
   getParent: (state) => {
-    return state.parent
+    return state.parent || sessionStorage.getItem('inviter')
   }
 }
 
@@ -30,14 +30,20 @@ const actions = {
   findUser ({ commit }, address) {
     findUser({ walletAddress: address }).then(data => {
       data = data || { invCode: '', parent: '' }
-      commit('setInvitationCode', data.invCode)
-      commit('setParent', data.parent)
+      if (data.invCode) {
+        commit('setInvitationCode', data.invCode)
+      }
+      if (data.parent) {
+        commit('setParent', data.parent)
+        sessionStorage.setItem('inviter', data.parent)
+      }
     })
   },
   findInviter ({ commit }, code) {
     findAddressByInvitation({ invCode: code }).then(data => {
-      data = data || { invCode: '', parent: '' }
-      commit('setParent', data.parent)
+      data = data || { invCode: '', walletAddress: '' }
+      commit('setParent', data.walletAddress)
+      sessionStorage.setItem('inviter', data.walletAddress)
     })
   }
 }

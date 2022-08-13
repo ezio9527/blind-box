@@ -6,7 +6,10 @@ module.exports = {
     allowanceError: 'Authorization query failed! Please check wallet connection status ',
     approve: 'Approving! ',
     transaction: 'In transaction!',
-    noMore: 'No more!'
+    noMore: 'No more!',
+    changeNet: 'Network switch ',
+    changeNetTips: 'The system detects that the current network is not BSC network, may I ask whether to switch to BSC network?',
+    netError: 'Network is not correct, system cannot operate'
   },
   success: {
     copyAddress: 'Address copy succeeded!',
@@ -41,7 +44,7 @@ module.exports = {
     searchPlaceholder: 'Please enter blind box name',
     search: 'search',
     lastNumber: 'number',
-    organization: 'Partner organization'
+    organization: 'Friend link'
   },
   // 盲盒详情
   boxView: {
@@ -55,7 +58,13 @@ module.exports = {
     tips: '%{rate}% chance of getting %{number}个 %{symbol}',
     award: 'Blind Box Reward',
     tips1: 'Congratulations on your acquisition',
-    tips2: 'the Reward'
+    tips2: 'the Reward',
+    description: 'Box description',
+    loading: 'loading',
+    approve: 'Approve',
+    allowance: 'Allowance',
+    confirm: 'Confirm',
+    cancel: 'Cancel'
   },
   // 我的团队
   teamView: {
@@ -86,7 +95,12 @@ module.exports = {
     awardBox: 'Blind Box Reward',
     invitationAward: 'Invitation to Commission'
   },
+  // 入驻方信息
   projectView: {
     title: 'Occupant Information'
+  },
+  // 操作指南
+  guideView: {
+    title: '操作指南'
   }
 }

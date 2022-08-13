@@ -7,42 +7,52 @@ import { Locale } from 'vant'
 import zhCN from 'vant/es/locale/lang/zh-CN'
 import enUS from 'vant/es/locale/lang/en-US'
 import Wallet from '@/pluins/Wallet'
-import walletConf from '@/assets/data/wallet.conf.js'
+import config from '@/assets/data/wallet.conf.js'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      wallet: null
+    }
+  },
   mounted () {
+    this.wallet = new Wallet({
+      config,
+      enable: this.enableHandler,
+      connect: this.connectHandler,
+      chainChanged: this.enable,
+      accountsChanged: this.enableHandler
+    })
+    this.$store.commit('wallet/setWallet', this.wallet)
     this.setLanguage()
-    this.enable()
-    this.listen()
     this.$store.dispatch('imageBaseUrl/getBaseUrl')
   },
   methods: {
-    // 获取授权
-    enable () {
-      Wallet.enable(walletConf).then(account => {
-        this.$store.commit('wallet/setAddress', account)
-        this.$store.dispatch('contract/initialize', account)
-        this.$store.dispatch('user/findUser', account)
-      })
+    // 授权回调
+    enableHandler (accounts) {
+      this.$store.commit('wallet/setAddress', accounts[0])
+      this.$store.dispatch('contract/initialize', accounts[0])
+      this.$store.dispatch('user/findUser', accounts[0])
     },
-    // 监听钱包
-    listen () {
-      if (window.ethereum) {
-        window.ethereum.on('chainChanged', chainId => {
-          console.log('chainChanged')
-          if (chainId === walletConf.chainId) {
-            this.enable()
-          }
+    // 连接回调
+    connectHandler ({ wallet }) {
+      wallet.enable()
+    },
+    // 网络切换回调
+    enable ({ wallet, chainId, config }) {
+      if (chainId !== config.chainId) {
+        this.$dialog.confirm({
+          title: this.$t('common.changeNet'),
+          message: this.$t('common.changeNetTips')
+        }).then(() => {
+          wallet.enable()
+        }).catch(() => {
+          // on cancel
+          this.$notify({ message: this.$t('common.netError'), duration: 5000 })
         })
-        window.ethereum.on('connect', data => {
-          console.log('connect')
-          console.log(data)
-        })
-        window.ethereum.on('disconnect', data => {
-          console.log('connect')
-          console.log(data)
-        })
+      } else {
+        wallet.enable()
       }
     },
     // 设置语言环境

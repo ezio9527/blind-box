@@ -2,7 +2,8 @@
   <div class="box-view">
     <van-nav-bar :title="$t('boxView.title')"
                  :left-arrow="true"
-                 @click-left="$router.push({ name: 'home' })">
+                 @click-left="$router.push({ name: 'home' })"
+                 @click-right="$router.push({ name: 'boxDescription', params: { description: boxDetails.box.owenDesc } })">
       <template #right>
         <svg class="icon icon-user" aria-hidden="true">
           <use xlink:href="#icon-user"></use>
@@ -11,7 +12,7 @@
     </van-nav-bar>
     <!--盲盒大图-->
     <div class="box-wrapper">
-      <van-image lazy-load :src="baseUrl+boxDetails.box.imageUrl">
+      <van-image lazy-load v-if="imageUrl" :src="imageUrl" fit="contain">
         <template v-slot:error><img src="@img/box/box.png"/></template>
       </van-image>
       <span>{{ boxDetails.box.boxName }}</span>
@@ -37,7 +38,26 @@
     </div>
     <!--开启盲盒-->
     <div class="box-open">
-      <button @click="buy" :disabled="disabled">{{ disabled ? $t('boxView.close') : $t('boxView.open') }}</button>
+      <!--加载中 -->
+      <template v-if="!boxDetails.box.id">
+        <button>{{ $t('boxView.loading') }}</button>
+      </template>
+      <!--活动结束-->
+      <template v-else-if="lastNum">
+        <button>{{ $t('boxView.close') }}</button>
+      </template>
+      <!--额度充足-->
+      <template v-else-if="authorization === 0">
+        <button @click="buy">{{ $t('boxView.open') }}</button>
+      </template>
+      <!--授权不足-->
+      <template v-else-if="authorization === 1">
+        <button @click="approve">{{ $t('boxView.approve') }}</button>
+      </template>
+      <!--额度查询失败-->
+      <template v-else-if="authorization === 2">
+        <button @click="allowance">{{ $t('boxView.allowance') }}</button>
+      </template>
     </div>
   </div>
 </template>
@@ -56,6 +76,8 @@ export default {
   },
   data () {
     return {
+      interval: null,
+      authorization: 2, // 授权额度是否足够
       boxDetails: {
         box: {},
         proportions: {}
@@ -69,7 +91,15 @@ export default {
       account: 'wallet/getAddress',
       parent: 'user/getParent'
     }),
-    disabled () {
+    imageUrl () {
+      if (!this.baseUrl || !this.boxDetails.box.imageUrl) {
+        return false
+      } else {
+        return this.baseUrl + this.boxDetails.box.imageUrl
+      }
+    },
+    // 盲盒剩余数量
+    lastNum () {
       return (this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) <= 0
     },
     ercContract () {
@@ -80,8 +110,27 @@ export default {
       }
     }
   },
+  watch: {
+    ercContract: {
+      immediate: true,
+      handler (val) {
+        if (val && this.boxDetails.box.id) {
+          // 数量足够就查授权
+          if ((this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) > 0) {
+            this.allowance()
+          }
+        }
+      }
+    }
+  },
   created () {
     this.findBoxById()
+    this.interval = setInterval(() => {
+      this.findBoxById()
+    }, 3000)
+  },
+  beforeUnmount () {
+    clearInterval(this.interval)
   },
   methods: {
     findBoxById () {
@@ -89,49 +138,61 @@ export default {
         this.boxDetails = data
       })
     },
-    buy () {
-      this.approve(contract.CrazyBox.address, 999999999999999).then(() => {
-        this.$toast.loading({ message: this.$t('common.transaction') })
-        const data = {
-          boxId: this.boxDetails.box.id
+    allowance () {
+      const address = contract.CrazyBox.address
+      let number = this.boxDetails.box.price
+      // 查询授权
+      this.ercContract.allowance(address).then(num => {
+        number = Web3.utils.toWei(number.toString())
+        number = Web3.utils.toBN(number.toString())
+        num = Web3.utils.toBN(num.toString())
+        if (num.gte(number)) {
+          // 额度足够
+          this.authorization = 0
+        } else {
+          // 额度不足
+          this.authorization = 1
         }
-        if (this.parent) {
-          data.inviter = this.parent
-        }
-        this.boxContract.buy(data).then(hash => {
-          console.log('完成交易', hash)
-          this.$toast.success({ message: this.$t('success.transaction') })
-          this.boxContract.getTransactionReceipt(hash).then()
-        }).catch(e => {
-          this.$toast.fail({ message: this.$t('error.transaction') })
-        })
+      }).catch(e => {
+        // 额度查询失败
+        this.authorization = 2
       })
     },
-    approve (address, number) {
-      return new Promise(resolve => {
-        // 查询授权
-        this.$toast.loading({ message: this.$t('common.allowance') })
-        this.ercContract.allowance(address).then(num => {
-          number = Web3.utils.toWei(number.toString())
-          number = Web3.utils.toBN(number.toString())
-          num = Web3.utils.toBN(num.toString())
-          if (num.gt(number)) {
-            resolve()
-          } else {
-            // 避免精度导致的授权数量不足，影响后续交易失败，这里直接用交易数量请求授权
-            this.$toast.loading({ message: this.$t('common.approve') })
-            this.ercContract.approve(address, number).then(() => {
-              this.$toast.success({ duration: 0, message: this.$t('success.approve') })
-            }).catch(e => {
-              this.$toast.fail({ duration: 0, message: this.$t('error.approve') })
-            }).finally(() => {
-              resolve()
-            })
-          }
-        }).catch(e => {
-          resolve()
-          this.$toast.fail({ duration: 0, message: this.$t('common.allowanceError') })
+    buy () {
+      const data = {
+        boxId: this.boxDetails.box.id
+      }
+      if (this.parent) {
+        data.inviter = this.parent
+      }
+      this.boxContract.buy(data).then(hash => {
+        this.$dialog.alert({
+          title: '标题',
+          message: '代码是写出来给人看的，附带能在机器上运行。'
         })
+
+        this.boxContract.getTransactionReceipt(hash).then(() => {
+          this.$dialog.confirm({
+            title: this.$t('boxView.award'),
+            confirmButtonText: this.$t('boxView.confirm'),
+            cancelButtonText: this.$t('boxView.cancel')
+          }).then(() => {
+            // on confirm
+            this.$router.push({ name: 'record' })
+          })
+        })
+      }).catch(e => {
+        this.$toast.fail({ message: this.$t('error.transaction') })
+      })
+    },
+    approve () {
+      const address = contract.CrazyBox.address
+      const number = 999999999999999
+      this.ercContract.approve(address, number).then(() => {
+        this.authorization = 0
+        this.$toast.success({ message: this.$t('success.approve') })
+      }).catch(e => {
+        this.$toast.fail({ message: this.$t('error.approve') })
       })
     }
   }
@@ -164,7 +225,7 @@ export default {
     justify-content: flex-end;
     .van-image, img {
       width: 145px;
-      height: 145px;
+      //max-height: 145px;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -261,6 +322,12 @@ export default {
       border: none;
       margin: auto;
     }
+  }
+}
+</style>
+<style lang="less">
+.box-view {
+  .box-wrapper {
   }
 }
 </style>

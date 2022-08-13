@@ -123,26 +123,26 @@ class BaseContract {
 
   /**
    * 发送交易
+   * @param {Number} gasLimit 自定义旷工费
    * @param {Object} address 用户地址
    * @param {Object} data 数据
    * @param {Object} value 转账金额
    */
-  sendEtherFrom ({ data, value = '0x0', from = this.contract.options.from, to = this.contract.options.address }) {
+  sendEtherFrom ({ gasLimit, data, value = '0x0', from = this.contract.options.from, to = this.contract.options.address }) {
     return new Promise((resolve, reject) => {
-      this.getGas({ data, value, from, to }).then(gasLimit => {
-        const parameters = [{
-          from,
-          to,
-          value,
-          data: data,
-          // gasPrice: res.gasPrice,
-          gasLimit: gasLimit
-        }]
-        const payload = {
-          method: 'eth_sendTransaction',
-          params: parameters,
-          from
-        }
+      const parameters = [{
+        from,
+        to,
+        value,
+        data: data
+      }]
+      const payload = {
+        method: 'eth_sendTransaction',
+        params: parameters,
+        from
+      }
+      if (gasLimit) {
+        parameters.gasLimit = gasLimit
         window.ethereum.sendAsync(payload, (error, response) => {
           if (error) {
             reject(error)
@@ -151,8 +151,20 @@ class BaseContract {
             resolve(response.result)
           }
         })
-        // getGas调用结束
-      })
+      } else {
+        this.getGas({ data, value, from, to }).then(gasLimit => {
+          parameters.gasLimit = gasLimit
+          window.ethereum.sendAsync(payload, (error, response) => {
+            if (error) {
+              reject(error)
+            }
+            if (response.result) {
+              resolve(response.result)
+            }
+          })
+          // getGas调用结束
+        })
+      }
     })
   }
 
@@ -171,8 +183,8 @@ class BaseContract {
         }).then(res => {
           console.log('交易确认函数-------', res)
           if (res) {
-            console.log('交易确认了-------', res.status === 1)
-            resolve(res.status === 1)
+            console.log('交易确认了-------', Number(res.status) === 1)
+            resolve(Number(res.status) === 1)
             clearInterval(timer)
           }
         }).catch(e => {

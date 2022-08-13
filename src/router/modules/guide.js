@@ -1,7 +1,7 @@
 export default {
   // 操作指南
   path: '/guide',
-  component: () => import('@views/guide/IndexView'),
+  component: { template: '<router-view/>' },
   children: [
     {
       path: 'list',

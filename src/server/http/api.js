@@ -56,5 +56,5 @@ export function findInvitationRecord (params) {
   return http.get('/wallet/findMyInv', { params, interceptors: true })
 }
 export function findAddressByInvitation (params) {
-  return http.get('/wallet/findInfoByInvCode', { params, interceptors: true })
+  return http.get('/wallet/findInfoByInvCode', { params })
 }

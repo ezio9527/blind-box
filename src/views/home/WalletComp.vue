@@ -8,18 +8,16 @@
       </div>
       <div class="wallet-connect" v-else>
         <div><img src="@img/box/box-bg.png" /></div>
-        <span @click="enable">{{ this.$t('boxView.connect') }}</span>
+        <span @click="wallet.enable">{{ this.$t('boxView.connect') }}</span>
       </div>
     </div>
-    <svg class="icon" aria-hidden="true" @click="enable">
+    <svg class="icon" aria-hidden="true">
       <use xlink:href="#icon-more"></use>
     </svg>
   </div>
 </template>
 
 <script>
-import Wallet from '@/pluins/Wallet'
-import walletConf from '@/assets/data/wallet.conf.js'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -30,22 +28,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      account: 'wallet/getAddress'
+      account: 'wallet/getAddress',
+      wallet: 'wallet/getWallet'
     }),
     slice () {
       const str = this.account
       const length = str.length
       const half = parseInt((length * 0.9).toString())
       return [str.slice(0, half), str.slice(half, length)]
-    }
-  },
-  methods: {
-    // 获取授权
-    enable () {
-      Wallet.enable(walletConf).then(account => {
-        this.$store.commit('wallet/setAddress', account)
-        this.$store.dispatch('contract/initialize', account)
-      })
     }
   }
 }

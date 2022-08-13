@@ -11,16 +11,21 @@
         <van-swipe-item class="line-word-hidden">{{ $t('homeView.noNotice') }}</van-swipe-item>
       </template>
     </van-swipe>
+    <base-dialog v-model:visible="dialog" :data="selectNotice"></base-dialog>
   </div>
 </template>
 
 <script>
 import { findNoticeAll } from '@/server/http/api'
+import BaseDialog from '@/components/BaseDialog'
 
 export default {
   name: 'NoticeComp',
+  components: { BaseDialog },
   data () {
     return {
+      dialog: false,
+      selectNotice: { title: '', content: '' },
       noticeAllList: []
     }
   },
@@ -38,7 +43,8 @@ export default {
   },
   methods: {
     notify (notice) {
-      this.$emit('notify', notice)
+      this.dialog = true
+      this.selectNotice = notice
     }
   }
 }

@@ -1,4 +1,5 @@
 import home from './home'
+import invitation from './invitation'
 import box from './box'
 import team from './team'
 import record from './record'
@@ -8,6 +9,7 @@ import notFound from './notFound'
 
 export default [
   home,
+  invitation,
   box,
   team,
   record,

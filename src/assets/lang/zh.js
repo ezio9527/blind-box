@@ -6,7 +6,10 @@ module.exports = {
     allowanceError: '授权查询失败!请检查钱包连接状态',
     approve: '正在授权!',
     transaction: '交易处理中!',
-    noMore: '没有更多了!'
+    noMore: '没有更多了!',
+    changeNet: '网络切换',
+    changeNetTips: '系统检测到当前不是BSC网络,请问是否切换致BSC网络?',
+    netError: '当前网络不正确，系统无法正常运行'
   },
   success: {
     copyAddress: '地址复制成功!',
@@ -41,7 +44,7 @@ module.exports = {
     searchPlaceholder: '请输入盲盒名称',
     search: '搜索',
     lastNumber: '剩余数量',
-    organization: '合作机构'
+    organization: '友情链接'
   },
   // 盲盒详情
   boxView: {
@@ -55,7 +58,13 @@ module.exports = {
     tips: '%{rate}%的概率开出 %{number}个 %{symbol}',
     award: '盲盒奖励',
     tips1: '恭喜您获取',
-    tips2: '的奖励'
+    tips2: '的奖励',
+    description: '盲盒简介',
+    loading: '盲盒加载中',
+    approve: '点击授权',
+    allowance: '查询授权',
+    confirm: '查看奖励',
+    cancel: '稍后去看'
   },
   // 我的团队
   teamView: {

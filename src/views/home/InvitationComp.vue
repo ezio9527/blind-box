@@ -25,7 +25,7 @@ export default {
       code: 'user/getInvitationCode'
     }),
     url () {
-      return location.host + '/' + this.code
+      return location.host + '/invitation/' + this.code
     }
   },
   mounted () {

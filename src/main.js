@@ -7,12 +7,12 @@ import '@/server/http'
 import '@/pluins/Date'
 import '@/assets/iconfont/iconfont'
 import '@/assets/theme/default/index.less'
-import { Toast, Lazyload } from 'vant'
+import { Notify, Dialog, Toast, Lazyload } from 'vant'
 import 'vant/es/toast/style'
 
 Toast.setDefaultOptions('loading', { duration: 0, overlay: true, forbidClick: true })
 
 createApp(App).use(store).use(router)
   .use(i18n)
-  .use(Toast).use(Lazyload)
+  .use(Notify).use(Dialog).use(Toast).use(Lazyload)
   .mount('#app')

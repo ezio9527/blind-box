@@ -1,10 +1,14 @@
 const state = () => ({
+  wallet: null, // 钱包对象
   address: '', // 钱包地址
   isDapp: false // dapp运行环境
 })
 
 // getters
 const getters = {
+  getWallet: (state) => {
+    return state.wallet
+  },
   getAddress: (state) => {
     return state.address
   },
@@ -15,6 +19,9 @@ const getters = {
 
 // mutations
 const mutations = {
+  setWallet: (state, wallet) => {
+    state.wallet = wallet
+  },
   setAddress (state, address) {
     state.address = address
   },

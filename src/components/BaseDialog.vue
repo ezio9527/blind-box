@@ -1,8 +1,8 @@
 <template>
-  <van-overlay class="dialog-comp" :show="show" :lock-scroll="false">
-    <div class="dialog-comp_wrapper" @click.stop>
-      <p>{{ notice.title }}</p>
-      <div v-html="notice.content"></div>
+  <van-overlay class="base-dialog" :show="show" :lock-scroll="false">
+    <div class="base-dialog_wrapper" @click.stop>
+      <p>{{ data.title }}</p>
+      <div v-html="data.content"></div>
       <div><button @click="close">{{ $t('common.confirm') }}</button></div>
     </div>
   </van-overlay>
@@ -10,13 +10,13 @@
 
 <script>
 export default {
-  name: 'DialogComp',
+  name: 'BaseDialog',
   props: {
     visible: {
       type: Boolean,
       default: false
     },
-    notice: {
+    data: {
       type: Object,
       default: () => ({
         title: '',
@@ -43,11 +43,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.dialog-comp {
+.base-dialog {
   display: flex;
   align-items: center;
   justify-content: center;
-  .dialog-comp_wrapper {
+  .base-dialog_wrapper {
     width: 262px;
     overflow: hidden;
     border-radius: var(--base-border-radius-sm);
