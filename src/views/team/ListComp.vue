@@ -1,13 +1,14 @@
 <template>
-  <van-pull-refresh v-model="refreshLoading" :head-height="80" @refresh="onRefresh">
-    <div class="list-comp">
-      <p>{{ $t('teamView.myInvitation') }}</p>
-      <div class="list-wrapper">
-        <div class="list-header">
-          <span>{{ $t('teamView.serial') }}</span>
-          <span>{{ $t('teamView.address') }}</span>
-        </div>
+  <div class="list-comp">
+    <p>{{ $t('teamView.myInvitation') }}</p>
+    <div class="list-wrapper">
+      <div class="list-header">
+        <span>{{ $t('teamView.serial') }}</span>
+        <span>{{ $t('teamView.address') }}</span>
+      </div>
+      <van-pull-refresh v-model="refreshLoading" :head-height="80" @refresh="onRefresh">
         <van-list
+          :offset="40"
           :immediate-check="false"
           v-model:loading="listLoading"
           :finished="finished"
@@ -18,9 +19,9 @@
             <span class="line-word-hidden">{{ item.walletAddress }}</span>
           </div>
         </van-list>
-      </div>
+      </van-pull-refresh>
     </div>
-  </van-pull-refresh>
+  </div>
 </template>
 
 <script>
@@ -49,7 +50,7 @@ export default {
       immediate: true,
       handler (val) {
         if (val) {
-          this.findRecord(val)
+          this.findRecord()
         }
       }
     }
@@ -63,11 +64,11 @@ export default {
       this.pageNo += 1
       this.findRecord()
     },
-    findRecord (account) {
+    findRecord () {
       findInvitationRecord({
         pageSize: this.pageSize,
         pageNo: this.pageNo,
-        walletAddress: account
+        walletAddress: this.account
       }).then(res => {
         const data = res.data || []
         if (this.pageNo === 1) {
@@ -79,6 +80,8 @@ export default {
         this.listLoading = false
         if (data.length < this.pageSize) {
           this.finished = true
+        } else {
+          this.finished = false
         }
         this.$emit('total', res.totalCount || 0)
       })
@@ -88,9 +91,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.van-pull-refresh {
-  min-height: 500px;
-}
 .list-comp {
   position: relative;
   z-index: 1;

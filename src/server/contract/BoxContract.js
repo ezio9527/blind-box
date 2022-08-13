@@ -33,7 +33,7 @@ class BoxContract extends BaseContract {
           inviter
         ]
       })
-      this.sendEtherFrom({ data, gasLimit: 500000 }).then(hash => {
+      this.sendEtherFrom({ data }).then(hash => {
         resolve(hash)
       }).catch(e => {
         reject(e)

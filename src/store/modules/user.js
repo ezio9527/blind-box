@@ -29,13 +29,13 @@ const mutations = {
 const actions = {
   findUser ({ commit }, address) {
     findUser({ walletAddress: address }).then(data => {
-      data = data || { invCode: '', parent: '' }
+      data = data || { invCode: '', parentAddress: '' }
       if (data.invCode) {
         commit('setInvitationCode', data.invCode)
       }
-      if (data.parent) {
-        commit('setParent', data.parent)
-        sessionStorage.setItem('inviter', data.parent)
+      if (data.parentAddress) {
+        commit('setParent', data.parentAddress)
+        sessionStorage.setItem('inviter', data.parentAddress)
       }
     })
   },

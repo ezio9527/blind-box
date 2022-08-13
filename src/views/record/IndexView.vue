@@ -6,15 +6,16 @@
                  @click-left="$router.push({ name: 'home' })"
                  @click-right="$router.push({ name: 'team' })">
     </van-nav-bar>
-    <van-pull-refresh v-model="refreshLoading" :head-height="80" @refresh="onRefresh">
-      <div class="record-list">
-        <div class="record-list-header">
-          <span>{{ $t('recordView.serial') }}</span>
-          <span>{{ $t('recordView.type') }}</span>
-          <span>{{ $t('recordView.sum') }}</span>
-          <span>{{ $t('recordView.time') }}</span>
-        </div>
+    <div class="record-list">
+      <div class="record-list-header">
+        <span>{{ $t('recordView.serial') }}</span>
+        <span>{{ $t('recordView.type') }}</span>
+        <span>{{ $t('recordView.sum') }}</span>
+        <span>{{ $t('recordView.time') }}</span>
+      </div>
+      <van-pull-refresh v-model="refreshLoading" :head-height="80" @refresh="onRefresh">
         <van-list
+          :offset="40"
           :immediate-check="false"
           v-model:loading="listLoading"
           :finished="finished"
@@ -23,16 +24,16 @@
           <div class="record-list-item" v-for="(record, index) in recordData" :key="index">
             <span>{{ index + 1 }}</span>
             <span>{{ formatter(record.evnType) }}</span>
-            <span>{{ (record.evnType===1?'-':'+') + record.quantity + record.symbol}}</span>
+            <span>{{ (record.evnType === 1 ? '-' : '+') + record.quantity + record.symbol }}</span>
             <span>
-              {{ new Date(record.createDate).format('MM-dd') }}
-              <br>
-              {{ new Date(record.createDate).format('hh:mm:ss') }}
-            </span>
+                {{ new Date(record.createDate).format('MM-dd') }}
+                <br>
+                {{ new Date(record.createDate).format('hh:mm:ss') }}
+              </span>
           </div>
         </van-list>
-      </div>
-    </van-pull-refresh>
+      </van-pull-refresh>
+    </div>
   </div>
 </template>
 
@@ -76,6 +77,8 @@ export default {
           return this.$t('recordView.awardBox')
         case 3:
           return this.$t('recordView.invitationAward')
+        case 4:
+          return this.$t('recordView.bat')
       }
     },
     onRefresh () {
@@ -101,9 +104,9 @@ export default {
         this.listLoading = false
         if (!data || (data.length < this.pageSize)) {
           this.finished = true
+        } else {
+          this.finished = false
         }
-      }).finally(() => {
-        this.loading = false
       })
     }
   }

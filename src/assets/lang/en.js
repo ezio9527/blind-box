@@ -57,14 +57,14 @@ module.exports = {
     close: 'Activity end',
     tips: '%{rate}% chance of getting %{number}个 %{symbol}',
     award: 'Blind Box Reward',
-    tips1: 'Congratulations on your acquisition',
-    tips2: 'the Reward',
     description: 'Box description',
     loading: 'loading',
     approve: 'Approve',
     allowance: 'Allowance',
     confirm: 'Confirm',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    openedTitle: 'Blind box opened',
+    openedContent: 'Blind box opened, awaiting block confirmation!'
   },
   // 我的团队
   teamView: {
@@ -93,7 +93,8 @@ module.exports = {
     time: 'time',
     openBox: 'Open the blind box',
     awardBox: 'Blind Box Reward',
-    invitationAward: 'Invitation to Commission'
+    invitationAward: 'Invitation to Commission',
+    bat: 'Batch enter'
   },
   // 入驻方信息
   projectView: {

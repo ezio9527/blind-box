@@ -81,7 +81,8 @@ export default {
       boxDetails: {
         box: {},
         proportions: {}
-      }
+      },
+      ercContract: null
     }
   },
   computed: {
@@ -101,24 +102,31 @@ export default {
     // 盲盒剩余数量
     lastNum () {
       return (this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) <= 0
-    },
-    ercContract () {
-      if (this.account && this.boxDetails.box.contractAddress) {
-        return new ERCContract(this.account, this.boxDetails.box.contractAddress)
-      } else {
-        return null
-      }
     }
+    // ercContract () {
+    //   if (this.account && this.boxDetails.box.contractAddress) {
+    //     return new ERCContract(this.account, this.boxDetails.box.contractAddress)
+    //   } else {
+    //     return null
+    //   }
+    // }
   },
   watch: {
+    boxDetails: {
+      immediate: true,
+      deep: true,
+      handler (val) {
+        if (!this.ercContract && this.account && val.box.contractAddress) {
+          this.ercContract = new ERCContract(this.account, val.box.contractAddress)
+        }
+      }
+    },
     ercContract: {
       immediate: true,
       handler (val) {
-        if (val && this.boxDetails.box.id) {
-          // 数量足够就查授权
-          if ((this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) > 0) {
-            this.allowance()
-          }
+        // 盲盒数量足够就查授权
+        if (val && ((this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) > 0)) {
+          this.allowance()
         }
       }
     }
@@ -167,22 +175,31 @@ export default {
       }
       this.boxContract.buy(data).then(hash => {
         this.$dialog.alert({
-          title: '标题',
-          message: '代码是写出来给人看的，附带能在机器上运行。'
+          title: this.$t('boxView.openedTitle'),
+          message: this.$t('boxView.openedContent')
         })
-
-        this.boxContract.getTransactionReceipt(hash).then(() => {
-          this.$dialog.confirm({
-            title: this.$t('boxView.award'),
-            confirmButtonText: this.$t('boxView.confirm'),
-            cancelButtonText: this.$t('boxView.cancel')
-          }).then(() => {
-            // on confirm
-            this.$router.push({ name: 'record' })
-          })
+        this.boxContract.getTransactionReceipt(hash).then(result => {
+          if (result) {
+            this.$dialog.confirm({
+              title: this.$t('boxView.award'),
+              confirmButtonText: this.$t('boxView.confirm'),
+              cancelButtonText: this.$t('boxView.cancel')
+            }).then(() => {
+              // on confirm
+              this.$router.push({ name: 'record' })
+            })
+          } else {
+            this.$dialog.alert({
+              title: this.$t('error.transaction'),
+              message: this.$t('boxView.reason')
+            })
+          }
         })
       }).catch(e => {
-        this.$toast.fail({ message: this.$t('error.transaction') })
+        this.$dialog.alert({
+          title: this.$t('boxView.openedTitle'),
+          message: this.$t('error.transaction')
+        })
       })
     },
     approve () {

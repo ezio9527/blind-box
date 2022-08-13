@@ -27,7 +27,7 @@ module.exports = {
     copyTwitter: 'Twitter复制失败!',
     copyEmail: 'Email复制失败!',
     approve: '授权失败!',
-    transaction: '交易失败!'
+    transaction: '交易出错了!'
   },
   component: {
   },
@@ -57,14 +57,15 @@ module.exports = {
     close: '活动结束',
     tips: '%{rate}%的概率开出 %{number}个 %{symbol}',
     award: '盲盒奖励',
-    tips1: '恭喜您获取',
-    tips2: '的奖励',
     description: '盲盒简介',
     loading: '盲盒加载中',
     approve: '点击授权',
     allowance: '查询授权',
     confirm: '查看奖励',
-    cancel: '稍后去看'
+    cancel: '稍后去看',
+    openedTitle: '盲盒已开',
+    openedContent: '盲盒已开启，正在等待区块确认!',
+    reason: '交易出错了，请检查您的余额或者旷工费设置'
   },
   // 我的团队
   teamView: {
@@ -93,7 +94,8 @@ module.exports = {
     time: '时间',
     openBox: '开启盲盒',
     awardBox: '盲盒奖励',
-    invitationAward: '邀请分佣'
+    invitationAward: '邀请分佣',
+    bat: '批量入账'
   },
   // 入驻方信息
   projectView: {
