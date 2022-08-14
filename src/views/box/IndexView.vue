@@ -46,6 +46,10 @@
       <template v-else-if="lastNum">
         <button>{{ $t('boxView.close') }}</button>
       </template>
+      <!--余额不足-->
+      <template v-else-if="balance === 1">
+        <button>{{ $t('boxView.balance', { symbol: boxDetails.box.symbol }) }}</button>
+      </template>
       <!--额度充足-->
       <template v-else-if="authorization === 0">
         <button @click="buy">{{ $t('boxView.open') }}</button>
@@ -77,7 +81,8 @@ export default {
   data () {
     return {
       interval: null,
-      authorization: 2, // 授权额度是否足够
+      balance: 2, // 余额状态: 0余额足够, 1余额不足, 2查不到
+      authorization: 2, // 授权状态
       boxDetails: {
         box: {},
         proportions: {}
@@ -126,7 +131,9 @@ export default {
       handler (val) {
         // 盲盒数量足够就查授权
         if (val && ((this.boxDetails.box.totalNum - this.boxDetails.box.sellNum) > 0)) {
-          this.allowance()
+          this.balanceOf().then(() => {
+            this.allowance()
+          })
         }
       }
     }
@@ -144,6 +151,29 @@ export default {
     findBoxById () {
       findBoxById({ id: this.id }).then(data => {
         this.boxDetails = data
+      })
+    },
+    balanceOf () {
+      return new Promise(resolve => {
+        // 查余额
+        this.ercContract.getBalanceInfo().then(balance => {
+          // eslint-disable-next-line no-debugger
+          debugger
+          if (balance >= this.boxDetails.box.price) {
+            // 余额足够
+            this.balance = 0
+          } else {
+            // 余额不足
+            this.balance = 1
+          }
+          resolve()
+        }).catch(e => {
+          // eslint-disable-next-line no-debugger
+          debugger
+          // 余额查询失败
+          this.balance = 2
+          resolve()
+        })
       })
     },
     allowance () {

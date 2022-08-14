@@ -65,7 +65,8 @@ module.exports = {
     cancel: '稍后去看',
     openedTitle: '盲盒已开',
     openedContent: '盲盒已开启，正在等待区块确认!',
-    reason: '交易出错了，请检查您的余额或者旷工费设置'
+    reason: '交易出错了，请检查您的余额或者旷工费设置',
+    balance: '%{symbol}余额不足'
   },
   // 我的团队
   teamView: {

@@ -64,7 +64,8 @@ module.exports = {
     confirm: 'Confirm',
     cancel: 'Cancel',
     openedTitle: 'Blind box opened',
-    openedContent: 'Blind box opened, awaiting block confirmation!'
+    openedContent: 'Blind box opened, awaiting block confirmation!',
+    balance: '%{symbol} not sufficient funds'
   },
   // 我的团队
   teamView: {

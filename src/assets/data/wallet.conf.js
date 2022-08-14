@@ -4,7 +4,7 @@ import walletTestConf from './wallet.test.conf.json'
 const ENV_PRODUCTION = 'production'
 const ENV_DEVELOPMENT = 'development'
 
-const env = ENV_DEVELOPMENT
+const env = ENV_PRODUCTION
 let config
 
 if (env === ENV_DEVELOPMENT) {
