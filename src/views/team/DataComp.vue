@@ -34,7 +34,7 @@ export default {
       parent: 'user/getParent'
     }),
     slice () {
-      const str = this.parent || this.account
+      const str = this.parent || ''
       const length = str.length
       const half = parseInt((length * 0.8).toString())
       return [str.slice(0, half), str.slice(half, length)]
@@ -62,7 +62,7 @@ export default {
       }).then(data => {
         this.income = (data || [{ quantity: '', symbol: this.$t('teamView.noIncome') }]).map(item => {
           return item.quantity + item.symbol
-        }).join(' ; ')
+        }).join(' / ')
       })
     }
   }
@@ -103,7 +103,9 @@ export default {
     display: flex;
     text-align: center;
     >div {
-      margin-right: 70px;
+      &:first-child {
+        margin-right: 70px;
+      }
       div:last-child {
         font-size: var(--base-font-size-large);
         line-height: 25px;

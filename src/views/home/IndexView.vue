@@ -61,6 +61,8 @@ export default {
   created () {
     if (this.id) {
       this.$store.dispatch('user/findInviter', this.id)
+    } else {
+      sessionStorage.removeItem('inviter')
     }
   },
   methods: {
