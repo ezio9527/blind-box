@@ -24,7 +24,6 @@ export default {
       chainChanged: this.enable,
       accountsChanged: this.enableHandler
     })
-    this.wallet.enable()
     this.$store.commit('wallet/setWallet', this.wallet)
     this.setLanguage()
     this.$store.dispatch('imageBaseUrl/getBaseUrl')

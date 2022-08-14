@@ -37,6 +37,15 @@ export default {
       const half = parseInt((length * 0.9).toString())
       return [str.slice(0, half), str.slice(half, length)]
     }
+  },
+  mounted () {
+    const interval = setInterval(() => {
+      if (this.account) {
+        clearInterval(interval)
+      } else {
+        this.wallet.enable()
+      }
+    }, 200)
   }
 }
 </script>
