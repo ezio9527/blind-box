@@ -50,6 +50,10 @@
       <template v-else-if="balance === 1">
         <button>{{ $t('boxView.balance', { symbol: boxDetails.box.symbol }) }}</button>
       </template>
+      <!--余额查询失败-->
+      <template v-else-if="balance === 2">
+        <button @click="balanceOf">{{ $t('boxView.qryBalance') }}</button>
+      </template>
       <!--额度充足-->
       <template v-else-if="authorization === 0">
         <button @click="buy">{{ $t('boxView.open') }}</button>
@@ -156,9 +160,9 @@ export default {
     balanceOf () {
       return new Promise(resolve => {
         // 查余额
+        this.$toast.loading({ message: this.$t('common.balance') })
         this.ercContract.getBalanceInfo().then(balance => {
-          // eslint-disable-next-line no-debugger
-          debugger
+          this.$toast.clear()
           if (balance >= this.boxDetails.box.price) {
             // 余额足够
             this.balance = 0
@@ -168,8 +172,7 @@ export default {
           }
           resolve()
         }).catch(e => {
-          // eslint-disable-next-line no-debugger
-          debugger
+          this.$toast.fail({ message: this.$t('common.balanceError') })
           // 余额查询失败
           this.balance = 2
           resolve()
@@ -180,7 +183,9 @@ export default {
       const address = contract.CrazyBox.address
       let number = this.boxDetails.box.price
       // 查询授权
+      this.$toast.loading({ message: this.$t('common.allowance') })
       this.ercContract.allowance(address).then(num => {
+        this.$toast.clear()
         number = Web3.utils.toWei(number.toString())
         number = Web3.utils.toBN(number.toString())
         num = Web3.utils.toBN(num.toString())
@@ -194,6 +199,8 @@ export default {
       }).catch(e => {
         // 额度查询失败
         this.authorization = 2
+        // 查询授权
+        this.$toast.fail({ message: this.$t('common.allowanceError') })
       })
     },
     buy () {

@@ -2,8 +2,10 @@ module.exports = {
   common: {
     confirm: 'Confirm it.',
     back: 'Back',
+    balance: 'Balance query in progress!',
+    balanceError: 'Balance query failed! Please try again!',
     allowance: 'Authorization available! ',
-    allowanceError: 'Authorization query failed! Please check wallet connection status ',
+    allowanceError: 'Authorization query failed! Please try again',
     approve: 'Approving! ',
     transaction: 'In transaction!',
     noMore: 'No more!',
@@ -61,10 +63,12 @@ module.exports = {
     loading: 'loading',
     approve: 'Approve',
     allowance: 'Allowance',
+    qryBalance: '查询余额',
     confirm: 'Confirm',
     cancel: 'Cancel',
     openedTitle: 'Blind box opened',
     openedContent: 'Blind box opened, awaiting block confirmation!',
+    reason: 'Transaction error, please check your balance or absenteeism fee Settings',
     balance: '%{symbol} not sufficient funds'
   },
   // 我的团队
@@ -103,6 +107,6 @@ module.exports = {
   },
   // 操作指南
   guideView: {
-    title: '操作指南'
+    title: 'Guide'
   }
 }
