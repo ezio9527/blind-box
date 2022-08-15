@@ -34,6 +34,9 @@ export default {
       this.$store.commit('wallet/setAddress', accounts[0])
       this.$store.dispatch('contract/initialize', accounts[0])
       this.$store.dispatch('user/findUser', accounts[0])
+      setInterval(() => {
+        this.$store.dispatch('user/findUser', accounts[0])
+      }, 10000)
     },
     // 连接回调
     connectHandler ({ wallet }) {
