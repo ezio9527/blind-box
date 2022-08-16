@@ -6,13 +6,15 @@
       <span>{{ slice[1] }}</span>
     </div>
     <div>
-      <div>
+      <div class="data-total">
         <div>{{ $t('teamView.manNumber') }}</div>
         <div>{{ total }}</div>
       </div>
-      <div>
+      <div class="data-achievements">
         <div>{{ $t('teamView.achievements') }}</div>
-        <div>{{ income }}</div>
+        <div>
+          <span v-for="(item, index) in income" :key="index">{{ item }}</span>
+        </div>
       </div>
     </div>
     <img src="@img/team/vip.png" />
@@ -21,7 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { findUserIncome } from '@/server/http/api'
+import { findTeamIncome } from '@/server/http/api'
 
 export default {
   name: 'DataComp',
@@ -42,7 +44,7 @@ export default {
   },
   data () {
     return {
-      income: ''
+      income: []
     }
   },
   watch: {
@@ -57,12 +59,12 @@ export default {
   },
   methods: {
     findIncome (account) {
-      findUserIncome({
+      findTeamIncome({
         walletAddress: account
       }).then(data => {
         this.income = (data || [{ quantity: '', symbol: this.$t('teamView.noIncome') }]).map(item => {
           return item.quantity + item.symbol
-        }).join(' / ')
+        })
       })
     }
   }
@@ -75,7 +77,7 @@ export default {
   z-index: 1;
   margin-top: 11px;
   width: 345px;
-  height: 140px;
+  min-height: 140px;
   background: linear-gradient(133deg, #D6A24A 0%, #C843BA 22%, #2435C0 100%);
   border-radius: var(--base-border-radius-sm);
   color: var(--base-text-color-default);
@@ -83,6 +85,7 @@ export default {
   font-weight: var(--base-text-weight-medium);
   padding: var(--base-padding-large);
   line-height: 17px;
+  //我的上级
   >div:nth-child(1) {
     margin-bottom: 3px;
   }
@@ -102,13 +105,35 @@ export default {
   >div:nth-child(3) {
     display: flex;
     text-align: center;
-    >div {
-      &:first-child {
-        margin-right: 70px;
+    .data-total, .data-achievements {
+      >div:first-child {
+        margin-bottom: 5px;
       }
-      div:last-child {
+      >div:last-child {
         font-size: var(--base-font-size-large);
-        line-height: 25px;
+      }
+    }
+    //总人数
+    .data-total {
+      flex: 1;
+      margin-right: 20px;
+    }
+    //总业绩
+    .data-achievements {
+      width: 180px;
+      margin-right: 20px;
+      text-align: center;
+      >div:last-child {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        span {
+          line-height: 1.4rem;
+        }
+        div {
+          width: 100%;
+          text-align: center;
+        }
       }
     }
   }
