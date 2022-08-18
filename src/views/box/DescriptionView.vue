@@ -4,7 +4,7 @@
                  :left-arrow="true"
                  @click-left="$router.push({name: 'box', params: { id }})">
     </van-nav-bar>
-    <div v-html="description"></div>
+    <div class="description-content" v-html="description"></div>
   </div>
 </template>
 
@@ -27,6 +27,9 @@ export default {
   padding-top: 0;
   .van-nav-bar {
     margin: 0 -15px 0 -15px;
+  }
+  .description-content {
+    word-break: break-word;
   }
 }
 </style>

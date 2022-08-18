@@ -30,7 +30,7 @@
         <div>
           <span v-for="(item, index) in boxDetails.proportions" :key="index">
             <img src="@img/box/dot.png" />
-            {{ $t('boxView.tips', { rate: item.totalNum * 10, number: item.quantity, symbol: item.symbol}) }}
+            {{ $t('boxView.tips', { rate: (item.totalNum/boxDetails.box.totalNum)*100, number: item.quantity, symbol: item.symbol}) }}
           </span>
         </div>
         <img src="@img/box/safe.png">

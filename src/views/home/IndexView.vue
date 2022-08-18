@@ -34,6 +34,7 @@ import SearchComp from '@/views/home/SearchComp'
 import BoxListComp from '@/views/home/BoxListComp'
 import OrganizationComp from '@/views/home/OrganizationComp'
 import LanguageComp from '@/views/home/LanguageComp'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HomeView',
   components: {
@@ -58,11 +59,14 @@ export default {
       boxName: ''
     }
   },
+  computed: {
+    ...mapGetters({
+      account: 'wallet/getAddress'
+    })
+  },
   created () {
     if (this.id) {
-      this.$store.dispatch('user/findInviter', this.id)
-    } else {
-      sessionStorage.removeItem('inviter')
+      this.$store.dispatch('user/findUserInfo', { address: this.account, code: this.id })
     }
   },
   methods: {
