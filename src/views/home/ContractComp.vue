@@ -13,13 +13,13 @@
 
 <script>
 import ClipboardJS from 'clipboard'
-import contract from '@data/contract.json'
+import config from '@data/config.js'
 
 export default {
   name: 'ContractComp',
   data () {
     return {
-      address: contract.CrazyBox.address
+      address: config.contract.CrazyBox.address
     }
   },
   computed: {

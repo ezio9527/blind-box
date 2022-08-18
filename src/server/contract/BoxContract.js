@@ -1,7 +1,6 @@
 import Web3 from 'web3'
 import BaseContract from '@/server/contract/BaseContract'
-import contract from '@data/contract.json'
-import abi from '@data/CrazyBox.abi.json'
+import config from '@data/config.js'
 
 class BoxContract extends BaseContract {
   /**
@@ -15,7 +14,7 @@ class BoxContract extends BaseContract {
    * @param {String} walletAddress 钱包地址
    */
   constructor (walletAddress) {
-    super(abi, walletAddress, contract.CrazyBox.address)
+    super(config.abi.CrazyBox, walletAddress, config.contract.CrazyBox.address)
   }
 
   /**

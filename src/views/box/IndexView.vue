@@ -75,7 +75,7 @@ import { findBoxById } from '@/server/http/api'
 import { mapGetters } from 'vuex'
 import Web3 from 'web3'
 import ERCContract from '@/server/contract/ERCContract'
-import contract from '@data/contract.json'
+import config from '@data/config.js'
 
 export default {
   name: 'BoxView',
@@ -180,7 +180,7 @@ export default {
       })
     },
     allowance () {
-      const address = contract.CrazyBox.address
+      const address = config.contract.CrazyBox.address
       let number = this.boxDetails.box.price
       // 查询授权
       this.$toast.loading({ message: this.$t('common.allowance') })
@@ -240,7 +240,7 @@ export default {
       })
     },
     approve () {
-      const address = contract.CrazyBox.address
+      const address = config.contract.CrazyBox.address
       const number = 999999999999999
       this.ercContract.approve(address, number).then(() => {
         this.authorization = 0

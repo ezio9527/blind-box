@@ -1,5 +1,5 @@
 import BaseContract from '@/server/contract/BaseContract'
-import abi from '@data/ERCToken.abi.json'
+import config from '@data/config.js'
 
 class BoxContract extends BaseContract {
   /**
@@ -14,7 +14,7 @@ class BoxContract extends BaseContract {
    * @param {String} contractAddress 合约地址
    */
   constructor (walletAddress, contractAddress) {
-    super(abi, walletAddress, contractAddress)
+    super(config.abi.ERCToken, walletAddress, contractAddress)
   }
 }
 

@@ -1,0 +1,12 @@
+{
+  "production": {
+    "CrazyBox": {
+      "address": "0xfF3a5f6a2ea2412F83b64007558AB9F0c104E0Ab"
+    }
+  },
+  "development": {
+    "CrazyBox": {
+      "address": "0xe16c6926c55c7a976c10d02a5fab6ba7cc701703"
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { Locale } from 'vant'
 import zhCN from 'vant/es/locale/lang/zh-CN'
 import enUS from 'vant/es/locale/lang/en-US'
 import Wallet from '@/pluins/Wallet'
-import config from '@/assets/data/wallet.conf.js'
+import config from '@/assets/data/config.js'
 
 export default {
   name: 'App',
@@ -18,7 +18,7 @@ export default {
   },
   mounted () {
     this.wallet = new Wallet({
-      config,
+      config: config.wallet,
       enable: this.enableHandler,
       connect: this.connectHandler,
       chainChanged: this.enable,
