@@ -1,5 +1,7 @@
 module.exports = {
   common: {
+    copy: '复制',
+    close: '关闭',
     confirm: '确认',
     back: '返回',
     balance: '余额查询中!',
@@ -14,6 +16,7 @@ module.exports = {
     netError: '当前网络不正确，系统无法正常运行'
   },
   success: {
+    copy: '复制成功!',
     copyAddress: '地址复制成功!',
     copyUrl: '链接复制成功!',
     copyTelegram: 'Telegram复制成功!',
@@ -23,6 +26,7 @@ module.exports = {
     transaction: '交易成功!'
   },
   error: {
+    copy: '复制失败!',
     copyAddress: '地址复制失败!',
     copyUrl: '链接复制失败!',
     copyTelegram: 'Telegram复制失败!',

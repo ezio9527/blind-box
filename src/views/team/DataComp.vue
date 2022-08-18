@@ -10,14 +10,21 @@
         <div>{{ $t('teamView.manNumber') }}</div>
         <div>{{ total }}</div>
       </div>
-      <div class="data-achievements">
-        <div>{{ $t('teamView.achievements') }}</div>
-        <div>
-          <span v-for="(item, index) in income" :key="index">{{ item }}</span>
-        </div>
+      <div class="data-achievements" @click="show=true">
+        {{ $t('teamView.achievements') }}
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-right-arrow"></use>
+        </svg>
       </div>
     </div>
     <img src="@img/team/vip.png" />
+    <van-action-sheet
+      v-model:show="show"
+      :actions="incomeActions"
+      :cancel-text="$t('common.close')"
+      :description="$t('teamView.achievements')"
+      close-on-click-action
+    />
   </div>
 </template>
 
@@ -40,10 +47,18 @@ export default {
       const length = str.length
       const half = parseInt((length * 0.8).toString())
       return [str.slice(0, half), str.slice(half, length)]
+    },
+    incomeActions () {
+      return this.income.map(item => {
+        return {
+          name: item
+        }
+      })
     }
   },
   data () {
     return {
+      show: false,
       income: []
     }
   },
@@ -74,7 +89,7 @@ export default {
 <style lang="less" scoped>
 .data-comp {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   margin-top: 11px;
   width: 345px;
   min-height: 140px;
@@ -105,7 +120,10 @@ export default {
   >div:nth-child(3) {
     display: flex;
     text-align: center;
-    .data-total, .data-achievements {
+    //总人数
+    .data-total {
+      flex: 1;
+      margin-right: 20px;
       >div:first-child {
         margin-bottom: 5px;
       }
@@ -113,28 +131,13 @@ export default {
         font-size: var(--base-font-size-large);
       }
     }
-    //总人数
-    .data-total {
-      flex: 1;
-      margin-right: 20px;
-    }
     //总业绩
     .data-achievements {
       width: 180px;
-      margin-right: 20px;
-      text-align: center;
-      >div:last-child {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        span {
-          line-height: 1.4rem;
-        }
-        div {
-          width: 100%;
-          text-align: center;
-        }
-      }
+      font-size: var(--base-font-size-large);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   img {

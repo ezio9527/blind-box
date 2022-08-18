@@ -1,5 +1,7 @@
 module.exports = {
   common: {
+    copy: 'Copy',
+    close: 'Close',
     confirm: 'Confirm it.',
     back: 'Back',
     balance: 'Balance query in progress!',
@@ -14,6 +16,7 @@ module.exports = {
     netError: 'Network is not correct, system cannot operate'
   },
   success: {
+    copy: 'Copy succeeded!',
     copyAddress: 'Address copy succeeded!',
     copyUrl: 'Link copied successfully!',
     copyTelegram: 'Telegram copied successfully!',
@@ -23,6 +26,7 @@ module.exports = {
     transaction: 'Transaction successfully!'
   },
   error: {
+    copy: 'Copy failed!',
     copyAddress: 'Failed to copy the address!',
     copyUrl: 'Link copy failed!',
     copyTelegram: 'Telegram copy failed!',
