@@ -21,9 +21,13 @@ const mutations = {
 
 // actions
 const actions = {
-  async getBaseUrl ({ commit }) {
-    const data = await getBaseUrl()
-    commit('setUrl', data)
+  async getBaseUrl ({ commit, dispatch }) {
+    try {
+      const data = await getBaseUrl()
+      commit('setUrl', data)
+    } catch (e) {
+      dispatch('getBaseUrl')
+    }
   }
 }
 
