@@ -14,7 +14,6 @@
 
 <script>
 import { findUserIncome, findTeamIncome } from '@/server/http/api'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'DetailsComp',
@@ -34,17 +33,12 @@ export default {
       teamIncome: ''
     }
   },
-  computed: {
-    ...mapGetters({
-      account: 'wallet/getAddress'
-    })
-  },
   watch: {
-    account: {
+    record: {
       immediate: true,
       handler (val) {
-        if (val) {
-          this.findIncome(val)
+        if (val.walletAddress) {
+          this.findIncome(val.walletAddress)
         }
       }
     }

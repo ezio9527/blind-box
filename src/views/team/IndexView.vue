@@ -9,8 +9,8 @@
     <!--邀请链接-->
     <invitation-comp></invitation-comp>
     <!--我的邀请-->
-    <list-comp v-show="!detailsPanel" @query="findDetails" @total="getTotal"></list-comp>
-    <details-comp v-show="detailsPanel" :record="selectRecord" @exit="showList"></details-comp>
+    <list-comp v-if="!detailsPanel" @query="findDetails" @total="getTotal"></list-comp>
+    <details-comp v-else :record="selectRecord" @exit="showList"></details-comp>
     <!--邀请详情-->
     <!--<transition name="van-fade" mode="in-out">-->
     <!--</transition>-->
