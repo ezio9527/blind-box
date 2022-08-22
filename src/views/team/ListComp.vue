@@ -34,7 +34,7 @@ export default {
     return {
       refreshLoading: false,
       listLoading: false,
-      finished: false,
+      finished: true,
       pageSize: 10,
       pageNo: 1,
       list: []
@@ -83,7 +83,7 @@ export default {
         } else {
           this.finished = false
         }
-        this.$emit('total', res.totalCount || 0)
+        this.$emit('total', res.totalPerson || 0)
       })
     }
   }
