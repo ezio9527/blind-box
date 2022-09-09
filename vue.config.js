@@ -18,7 +18,7 @@ module.exports = defineConfig({
     config
       .plugin('html')
       .tap(args => {
-        args[0].title = 'xbox'
+        args[0].title = 'fomobfc'
         return args
       })
   },
