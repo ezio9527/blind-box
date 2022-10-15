@@ -182,7 +182,7 @@ export default {
     allowance () {
       const address = config.contract.CrazyBox.address
       let number = this.boxDetails.box.price
-      // 查询授权
+      // 查询授权1
       this.$toast.loading({ message: this.$t('common.allowance') })
       this.ercContract.allowance(address).then(num => {
         this.$toast.clear()
