@@ -29,7 +29,7 @@ export default {
     this.$store.dispatch('imageBaseUrl/getBaseUrl')
   },
   methods: {
-    // 授权回调
+    // 授权回调1
     enableHandler (accounts) {
       this.$store.commit('wallet/setAddress', accounts[0])
       this.$store.dispatch('contract/initialize', accounts[0])
